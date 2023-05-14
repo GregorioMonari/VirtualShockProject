@@ -16,13 +16,31 @@ class IsaManager{
         Object.keys(ISA_DATA).forEach(copName=>{
             this.log.trace("---------<instruction #"+instrNumber+">---------")
             this.log.trace("Copname: "+copName)
+            var type=ISA_DATA[copName].type;
             var copBytes=ISA_DATA[copName].copBytes;
             var fields=ISA_DATA[copName].fields;
 
+            this.log.trace("Type: "+type)
             this.log.trace("CopBytes: "+copBytes)
             this.log.trace("Instruction fields: "+JSON.stringify(fields))
             
-            this.isaDB[copName]=new Instruction(copBytes,fields);
+            switch (type) {
+                case "register":
+                        this.isaDB[copName]=new RegisterInstruction(copBytes,fields);
+                    break;
+
+                case "immediate":
+                        this.isaDB[copName]=new ImmediateInstruction(copBytes,fields);
+                    break;
+
+                case "jump":
+                        this.isaDB[copName]=new JumpInstruction(copBytes,fields);
+                    break;
+            
+                default:
+                    break;
+            }
+            
             
             instrNumber++;
         })

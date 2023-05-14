@@ -3,6 +3,8 @@ class Instruction{
         this.log=new GregLogs()
         this.copBytes=copBytes;
         this.fields=fields;
+        this.log.trace(this.fields)
+        this.nc=new NumberConversionManager();
         this.log.trace("Initialized new instruction")
     }
 

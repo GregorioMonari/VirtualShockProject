@@ -8,12 +8,19 @@ __JSON_ISA_PUBLIC__={
     },
     "data":{
         "add":{
+            "type":"register",
             "copBytes":"000000",
-            "fields":[]
+            "fields":["rd","rs1","rs2"]
         },
         "addi":{
+            "type":"immediate",
             "copBytes":"000001",
-            "fields":[]
+            "fields":["rs2","rs1","cost"]
+        },
+        "j":{
+            "type":"immediate",
+            "copBytes":"000010",
+            "fields":["cost"]
         }
     }
 }
