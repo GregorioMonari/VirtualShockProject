@@ -23,7 +23,7 @@ c db 3
 proc main {
     j mult
     start: add r29,   r1,r0
-    addi r2,r1,04fh
+    addi r2,r1,ab
     j start
 }
 
