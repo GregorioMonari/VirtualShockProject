@@ -5,8 +5,7 @@ class ImmediateInstruction extends Instruction{
     }
 
     //@OVERRIDE
-    assembleInstruction(instrFieldsString){
-
+    assembleInstruction(instrFieldsString,equDirs,dbDirs){
         this.log.trace("ASSEMBLING IMMEDIATE INSTRUCTION")
 
         var instrFieldsArr= instrFieldsString.split(",");
@@ -24,14 +23,39 @@ class ImmediateInstruction extends Instruction{
         var cop=this.copBytes;
         var rs1=this.nc.reg2bin(map["rs1"]);
         var rs2=this.nc.reg2bin(map["rs2"]);
-        var cost= this.parseConstantUnsigned(map["cost"]);
+        var cost= this.parseConstantUnsigned(map["cost"],equDirs,dbDirs);
         const binaryString=cop + rs1 + rs2 + cost;
         const hexString=this.nc.bin2hex(binaryString);
 
         return hexString
     }
 
-    parseConstantUnsigned(n){
+    parseConstantUnsigned(n,equDirs,dbDirs){
+        this.log.debug("Parsing variable: "+n)
+        //FIRST CHECH EQU OR DB DIRS
+        this.log.debug("Checking equDirs")
+        //console.log(equDirs)
+        for(var k in equDirs){
+            //console.log(k)
+            if(n==k){
+                this.log.debug("Substituting "+n+" with "+equDirs[k])
+                n=equDirs[k];
+                
+                break;
+            }
+        }
+
+        this.log.debug("Checking dbDirs")
+        for(var k in dbDirs){
+            if(n==k){
+                this.log.debug("Substituting "+n+" with "+dbDirs[k])
+                n=dbDirs[k];
+                break;
+            }
+        }
+
+
+        //CONVERT N INTO NUMBER
         var costType=this.nc.getNumberType(n);
         this.log.trace(costType)
 

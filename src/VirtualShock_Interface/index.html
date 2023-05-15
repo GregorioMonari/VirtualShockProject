@@ -2,31 +2,56 @@
 <html>
 <head>
 
-    <title></title>
-
+    <title>VirtualShock ASSEMBLER</title>
+    <link rel="stylesheet" type="text/css" href="CSS/main.css">
 </head>
 <body>
 
-
-    <div id="AssemblyEditor" contenteditable="true">
-        
-    </div>
-    <button onclick="assemble()">assemble</button>
-    <div id="MachineCodePreview">
-
+    <div id="topbar">
+        <h1>VIRTUALSHOCK ASSEMBLER</h1>
     </div>
 
+    <div id="code-wrapper">  
+
+        <div id="editor-wrapper">
+            <pre id="AssemblyEditor" contenteditable="true">
+
+            </pre>
+            
+            <div id="MachineCodePreview">
+    
+            </div>
+        </div>
+        <button onclick="assemble()">assemble</button>
+        <div id="console-wrapper">
+            <div id="console-topbar">
+                Output terminal
+            </div>
+            <div id="console">
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!--SCRIPTS-->
     <script src="JS/lib/GregLogs/config.js"></script>
     <script src="JS/lib/GregLogs/GregLogs.js"></script>
-    <script src="JS/VSHAssembler/NumberConversionManager.js"></script>
+    <script src="JS/VSHAssembler/core/NumberConversionManager.js"></script>
     <script src="JS/VSHAssembler/resources/VirtualShockIsa.js"></script>
-    <script src="JS/VSHAssembler/Instruction.js"></script>
-    <script src="JS/VSHAssembler/RegisterInstruction.js"></script>
-    <script src="JS/VSHAssembler/ImmediateInstruction.js"></script>
-    <script src="JS/VSHAssembler/JumpInstruction.js"></script>
+
+    <script src="JS/VSHAssembler/core/Instruction.js"></script>
+    <script src="JS/VSHAssembler/core/RegisterInstruction.js"></script>
+    <script src="JS/VSHAssembler/core/ImmediateInstruction.js"></script>
+    <script src="JS/VSHAssembler/core/JumpInstruction.js"></script>
+
+    <script src="JS/VSHAssembler/CodeSlicer.js"></script>
     <script src="JS/VSHAssembler/IsaLoader.js"></script>
     <script src="JS/VSHAssembler/IsaManager.js"></script>
     <script src="JS/VSHAssembler/VshAssembler.js"></script>
+
     <script src="JS/main.js"></script>
 
 </body>

@@ -1,11 +1,35 @@
 class GregLogs{
     constructor() {
       this.loglevel=this.getLogLevel();
+      this.separator=this.getSeparator();
       //this.info("New Greglogs logger created!")
-      this.separator=" | "
+      var divLoggerConfig=this.getDivLogger();
+      this.divLoggerEnabled=divLoggerConfig.enabled;
+      this.divLoggerLogLevel=divLoggerConfig.logLevel;
+      if(this.divLoggerEnabled){
+        this.element=document.getElementById(divLoggerConfig.elementId);
+        this.overrideDivLoggerEnable(false)
+        this.trace("GregLogs: DivLogger Enabled")
+        this.overrideDivLoggerEnable(true)
+      }
+
+      
     }
+
+    overrideDivLoggerEnable(enable){
+      this.divLoggerEnabled=enable
+    }
+
+    getSeparator(){
+      return __GREGLOGS_LOGGER_CONFIG__.separator
+    }
+
     getLogLevel(){
       return __GREGLOGS_LOGGER_CONFIG__.logLevel
+    }
+
+    getDivLogger(){
+      return __GREGLOGS_LOGGER_CONFIG__.divLogger
     }
     //=========
     //[3] LOG
@@ -16,25 +40,50 @@ class GregLogs{
       if(this.loglevel<1){
         console.log(get_current_timestamp()+this.separator+"[trace] ",text);
       }      
+      if(this.divLoggerEnabled){
+        if(this.divLoggerLogLevel<1){
+          this.element.innerHTML=this.element.innerHTML+get_current_timestamp()+this.separator+"[trace] "+text+"<br>";
+        }      
+      }      
     }
     debug(text){
       if(this.loglevel<2){
         console.log(get_current_timestamp()+this.separator+"[debug] ",text);
       }
+      if(this.divLoggerEnabled){
+        if(this.divLoggerLogLevel<2){
+          this.element.innerHTML=this.element.innerHTML+get_current_timestamp()+this.separator+"[debug] "+text+"<br>";
+        }      
+      }  
     }
     info(text){
       //var string=this.info.caller.name
       if(this.loglevel<3){
         console.log(get_current_timestamp()+this.separator+"[info] ",text);
       }
+      if(this.divLoggerEnabled){
+        if(this.divLoggerLogLevel<3){
+          this.element.innerHTML=this.element.innerHTML+get_current_timestamp()+this.separator+"[info] "+text+"<br>";
+        }      
+      }  
     }
     warning(text){
       if(this.loglevel<4){
         console.log(get_current_timestamp()+this.separator+"[WARNING] ",text);
       }
+      if(this.divLoggerEnabled){
+        if(this.divLoggerLogLevel<4){
+          this.element.innerHTML=this.element.innerHTML+get_current_timestamp()+this.separator+"[WARNING] "+text+"<br>";
+        }      
+      }  
     }
     error(text){
       console.log(get_current_timestamp()+this.separator+"[ERROR] ",text);
+      if(this.divLoggerEnabled){
+        if(this.divLoggerLogLevel<4){
+          this.element.innerHTML=this.element.innerHTML+get_current_timestamp()+this.separator+"[ERROR] "+text+"<br>";
+        }      
+      }  
     }
   }
   

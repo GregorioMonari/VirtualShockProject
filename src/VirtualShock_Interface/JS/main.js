@@ -1,46 +1,45 @@
+document.getElementById("console").innerHTML="MAO"
+
 log=new GregLogs()
-
-var nc=new NumberConversionManager()
-nc.bin2hex("0001010")
-
-
-
-nc.getNumberType(1)
 
 var editor=document.getElementById("AssemblyEditor")
 var mcPreview=document.getElementById("MachineCodePreview")
 var assembler= new VshAssembler();
-assemble()
-editor.textContent=""
+//assemble()
+editor.textContent=`
+
+#include <stdio.h>
+
+ab equ 10
+b equ 20
+c db 3
+
+proc main {
+    addi r1,r0,ab
+    start: add r29,r1,r0
+    addi r2,r1,04fh
+}
+
+`
 
 
 
 
 function assemble(){
-    //var rawText=editor.innerHTML
-    var machineCode = assembler.assembleRawTxtAssembly(`
+    var rawText=editor.innerText
+    this.log.debug(rawText);
+    var t0 = performance.now();
+    var machineCode = assembler.assembleRawTxtAssembly(rawText);
 
-    #include <stdio.h>
-    
-    a equ 10
-    b equ 20
-    c db 3
-    
-    proc main {
-    
-    
-    
-        addi r1,r0,04Fh
-        add r29,r1,r0
-    
-        addi r2,r1,04fh
-    }
-    
-
-    
-    `);
+    var t1 = performance.now();
+    console.log((t1-t0))
     this.log.trace(machineCode)
-    mcPreview.innerHTML=JSON.stringify(machineCode)
+
+
+    mcPreview.innerHTML="<b> MAIN MEMORY</b><br>Address - Data";
+    for(var i in machineCode){
+        mcPreview.innerHTML=mcPreview.innerHTML+"<br>"+""+i+": "+machineCode[i]
+    }
 }
 
 

@@ -1,0 +1,55 @@
+body{
+    margin:0;
+    padding:0;
+}
+
+#topbar{
+
+}
+
+#code-wrapper{
+    padding: 2%;
+    width:96%;
+    background: red;
+}
+
+#editor-wrapper{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background: white;
+}
+    #AssemblyEditor{
+        width: 50%;
+        height:50vh;
+        overflow: scroll;
+    }
+
+    #MachineCodePreview{
+        background: black;
+        color: white;
+        width: 50%;
+        height:50vh;
+        overflow: scroll;
+    }
+
+
+/*CONSOLE RULES*/
+#console-wrapper{
+    
+}
+    #console-topbar{
+        width: 100%; 
+        background:white;
+        border-width:2px;
+        border-style:solid;
+    }
+    #console{
+        width: 100%;
+        height: 30vh;
+        background:green;
+        border-width:2px;
+        border-style:solid;
+        overflow: scroll;
+        color:white;
+    }

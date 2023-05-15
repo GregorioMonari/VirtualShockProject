@@ -114,14 +114,108 @@ class NumberConversionManager{
 
     }
 
-    bin2hex(n,size){
+    bin2hex(n){
+        //console.log(n)
+        var slice=""
+        //console.log((n.length%4))
+        if((n.length%4)>0){
+            console.log("Extending hex")
+            for(var i=0; i<n.length%4; i++){
+                slice=slice+"0"
+            }
+            n=slice+n;
+        }
+        //console.log(n)
 
-        
+        var out=""
+        var currWord="";
+        var blockCount=0;
+        for(var i in n){
+            
+            currWord=currWord+n.charAt(i)
+            //console.log(i+":"+currWord)
+            blockCount++
+                
+            
+            if(blockCount>3){
+                switch (currWord) {
+                    case "0000":
+                        out=out+"0"
+                        break;
+                    case "0001":
+                        out=out+"1"
+                        break;   
+                    case "0010":
+                        out=out+"2"
+                        break;     
+                    case "0011":
+                        out=out+"3"
+                        break;    
+                    case "0100":
+                        out=out+"4"
+                        break;    
+                    case "0101":
+                        out=out+"5"
+                        break;    
+                    case "0110":
+                        out=out+"6"
+                        break;    
+                    case "0111":
+                        out=out+"7"
+                        break;    
+                    case "1000":
+                        out=out+"8"
+                        break;    
+                    case "1001":
+                        out=out+"9"
+                        break;    
+                    case "1010":
+                        out=out+"a"
+                        break;   
+                    case "1011":
+                        out=out+"b"
+                        break;    
+                    case "1100":
+                        out=out+"c"
+                        break;    
+                    case "1101":
+                        out=out+"d"
+                        break;    
+                    case "1110":
+                        out=out+"e"
+                        break;    
+                    case "1111":
+                        out=out+"f"
+                        break; 
+                
+                    default:
+                        break;
+                } 
+                //console.log("OUT: "+out)
+                currWord="";
+                blockCount=0;
+            }
+            
+
+        }
 
 
-        return n
+        return out
 
     }
+
+    bin2decUnsigned(n){
+
+        var out=0;
+        for(var i in n){
+            var bit=parseInt(n[n.length-i-1])
+            var weight=Math.pow(2,i)
+            out=out+(bit*weight)
+        }
+        return out
+
+    }
+
 
     dec2binUnsigned(decimal,size){
         if(size==null || size == undefined){throw new Error("dec2bin needs the size of the output number to be specified: dec2bin(decimal,size)")}
