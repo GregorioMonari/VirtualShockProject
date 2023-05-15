@@ -5,7 +5,7 @@ class ImmediateInstruction extends Instruction{
     }
 
     //@OVERRIDE
-    assembleInstruction(instrFieldsString,equDirs,dbDirs){
+    assembleInstruction(instrFieldsString,currAddrCount,jumpDb,equDirs,dbDirs){
         this.log.trace("ASSEMBLING IMMEDIATE INSTRUCTION")
 
         var instrFieldsArr= instrFieldsString.split(",");

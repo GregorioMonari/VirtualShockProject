@@ -6,12 +6,12 @@ class VshAssembler{
         //equ and db will vary 
         this.isaManager= new IsaManager();
 
-        var wordSize=1 //bytes
+        this.wordSize=1 //bytes
         var mainFirstAddress="0000h"
         var variablesFirstAddress="0010h"
         var proceduresFirstAddress="0fffh"
-        this.codeSlicer= new CodeSlicer(wordSize,mainFirstAddress,variablesFirstAddress,proceduresFirstAddress);
-
+        this.codeSlicer= new CodeSlicer(this.wordSize,mainFirstAddress,variablesFirstAddress,proceduresFirstAddress);
+        this.nc= new NumberConversionManager()
 
     }
 
@@ -54,9 +54,10 @@ class VshAssembler{
         var counter=0;
         Object.keys(mainArr).forEach(k=>{
 
-            
 
-            var instructionMC=this.isaManager.parseInstruction(mainArr[k],equDirs,dbDirs);
+            var currAddrCount=mainFirstAddr+(counter*this.wordSize)
+
+            var instructionMC=this.isaManager.parseInstruction(mainArr[k],currAddrCount,jumpDb,equDirs,dbDirs);
             this.log.trace(instructionMC)
             mainMachineCodeArr.push(instructionMC)
             
