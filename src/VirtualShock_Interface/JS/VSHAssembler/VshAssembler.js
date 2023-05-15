@@ -41,8 +41,8 @@ class VshAssembler{
 
         //calculate jumps
         var mainFirstAddr=codeObj.main.firstAddress
-        var currAddress=this.nc.hex2bin(mainFirstAddr);
-        currAddress=this.nc.bin2decUnsigned(currAddress);
+        mainFirstAddr=this.nc.hex2bin(mainFirstAddr);
+        mainFirstAddr=this.nc.bin2decUnsigned(mainFirstAddr);
         var jumpDb=codeObj.main.jumpDb
 
         //directives
@@ -55,7 +55,8 @@ class VshAssembler{
         Object.keys(mainArr).forEach(k=>{
 
 
-            var currAddrCount=mainFirstAddr+(counter*this.wordSize)
+            //IL COUNTER CONTA GIA' PC<-PC+wordSize
+            var currAddrCount=mainFirstAddr+(counter*this.wordSize)+this.wordSize
 
             var instructionMC=this.isaManager.parseInstruction(mainArr[k],currAddrCount,jumpDb,equDirs,dbDirs);
             this.log.trace(instructionMC)

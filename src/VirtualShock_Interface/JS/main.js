@@ -18,6 +18,14 @@ proc main {
     addi r1,r0,ab
     start: add r29,r1,r0
     addi r2,r1,04fh
+    j start
+}
+
+
+proc mult{
+    start: addi r1,r0,2
+    add r2,r1,r0
+    j start
 }
 
 `

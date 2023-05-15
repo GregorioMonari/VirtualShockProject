@@ -18,7 +18,7 @@ __JSON_ISA_PUBLIC__={
             "fields":["rs2","rs1","cost"]
         },
         "j":{
-            "type":"immediate",
+            "type":"jump",
             "copBytes":"000010",
             "fields":["cost"]
         }

@@ -10,18 +10,15 @@ class CodeSlicer{
     }
 
 
-    getCodeSections(code){
-        var res;
-        res=this.sliceMainBlock(code);
-        var mainBlock=res[0]; //MAIN
-        var dirtyMainArr=mainBlock.split("\n")
+    preprocessInstructionBlock(block,firstAddress){
+        var dirtyArr=block.split("\n")
         var mainArr=[];
-        var firstMainArrCounter=this.nc.hex2bin(this.mainAddress,16);
+        var firstMainArrCounter=this.nc.hex2bin(firstAddress,16);
         firstMainArrCounter=this.nc.bin2decUnsigned(firstMainArrCounter);
         var counter=0;
         var jumpDb={};
-        Object.keys(dirtyMainArr).forEach(k=>{
-            var line=dirtyMainArr[k].trim()
+        Object.keys(dirtyArr).forEach(k=>{
+            var line=dirtyArr[k].trim()
             if(line!=""){
                 mainArr[counter]=line
                 
@@ -36,19 +33,44 @@ class CodeSlicer{
                     jumpAddr=this.nc.bin2hex(jumpAddr);
                     //Then there is a : in the line
                     this.log.debug("Adding jump label '"+jumpName+"', address: "+jumpAddr)
-                    jumpDb[jumpName]=jumpAddr
+                    jumpDb[jumpName]=jumpAddr+"h"
                 }
                 
                 counter++;
             }
                           
         })
-        this.log.trace(mainArr)
+        return [mainArr,jumpDb]
+    }
 
 
-
-        //GET EQU AND DB DIRECTIVES
+    getCodeSections(code){
+        var res;
+        res=this.sliceMainBlock(code);
+        var mainBlock=res[0]; //MAIN
         var codeLeft=res[1];
+
+
+        res=this.getProcedures(codeLeft)
+        var procedures=res[0];
+        codeLeft=res[1]
+
+
+        var mainRes=this.preprocessInstructionBlock(mainBlock,this.mainAddress)
+        var mainArr=mainRes[0];
+        var jumpDb=mainRes[1];
+        this.log.debug(mainArr)
+
+
+        for(var i in procedures){
+            console.log(procedures[i].procName)
+        }
+
+
+
+
+        //---------------------------------------------------------------
+        //GET EQU AND DB DIRECTIVES
         res=this.getDirs(codeLeft);
         var equDirs=res[0]; //EQU
         var dbDirs=res[1]; //DB
@@ -74,10 +96,54 @@ class CodeSlicer{
                 "data":mainArr,
                 "jumpDb":jumpDb
             },
+            "procedures":[],
             "equ":equDirs,
             "db":calculatedDbDirs
         }
     }
+
+
+    getProcedures(code){
+        const re = new RegExp("proc(.*){");
+        var leftCode=code;
+        var counter=0;
+        var rawProcArr=[]
+        while(re.test(leftCode)){
+
+            var cell={}
+            var res=this.sliceProc(leftCode);
+            var procName=res[0]
+            console.log(procName)
+            var block=res[1]
+            leftCode=res[2];
+
+            cell["procName"]=procName;
+            cell["textData"]=block;
+
+            rawProcArr.push(cell)
+
+
+            counter++
+            cell={}
+        }
+        console.log("Finished reading "+counter+" Procedures")
+        return [rawProcArr,leftCode]
+    }
+    sliceProc(code){
+        const re = new RegExp("proc(.*){");
+        var res=re.exec(code);
+        var index=res.index;
+        this.log.trace(res)
+        var openBracketIndex=code.indexOf("{",index);
+        var closedBracketIndex=code.indexOf("}",index);
+        
+        var procName=code.slice(index+5,openBracketIndex)
+        var block=code.slice(openBracketIndex+1,closedBracketIndex);
+        var leftslice=code.slice(0,index);
+        var rightslice=code.slice(closedBracketIndex+1,code.length)
+        return [procName,block,leftslice+rightslice]
+    }
+
 
     sliceMainBlock(code){
         const re = new RegExp("proc *main *{");

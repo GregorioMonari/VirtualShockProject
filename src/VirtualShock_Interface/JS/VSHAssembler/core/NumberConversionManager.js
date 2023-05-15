@@ -7,6 +7,7 @@ class NumberConversionManager{
         var string="ciao";
         var number=1;
 
+
         if(typeof n == typeof string){
             var string=n.toLowerCase()
             if(string.endsWith("h")){
@@ -19,7 +20,7 @@ class NumberConversionManager{
                 }
             }
         }
-        if(typeof n == typeof string){
+        if(typeof n == typeof number){
             return "decimal"
         }
 
@@ -216,6 +217,29 @@ class NumberConversionManager{
 
     }
 
+
+    dec2binSigned(decimal,size){
+        if(decimal<0){
+            var mod=decimal*-1
+            var n=this.dec2binUnsigned(mod,size)
+            var notN="";
+            for(var i in n){
+                var bin=n.charAt(i);
+                if(bin=="0"){
+                    notN=notN+"1";
+                }else{
+                    notN=notN+"0";
+                }
+            }
+            var temp=parseInt(this.bin2decUnsigned(notN))
+            temp=temp+1;
+            var notNincr=this.dec2binUnsigned(temp,size)
+            return notNincr
+
+        }else{
+            throw new Error("Dec2bin signed for integers >0 not yet implemented")
+        }
+    }
 
     dec2binUnsigned(decimal,size){
         if(size==null || size == undefined){throw new Error("dec2bin needs the size of the output number to be specified: dec2bin(decimal,size)")}
