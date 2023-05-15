@@ -237,7 +237,9 @@ class NumberConversionManager{
             return notNincr
 
         }else{
-            throw new Error("Dec2bin signed for integers >0 not yet implemented")
+            //throw new Error("Dec2bin signed for integers >0 not yet implemented")
+            return this.dec2binUnsigned(decimal,size);
+
         }
     }
 

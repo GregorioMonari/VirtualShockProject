@@ -6,7 +6,7 @@ class JumpInstruction extends Instruction{
 
 
 //@OVERRIDE
-assembleInstruction(instrFieldsString,currAddrCount,jumpDb,equDirs,dbDirs){
+assembleInstruction(instrFieldsString,currAddrCount,jumpDb,equDirs,dbDirs,procsPublicDb){
     this.log.trace("ASSEMBLING JUMP INSTRUCTION")
 
     var instrFieldsArr= instrFieldsString.split(",");
@@ -22,29 +22,29 @@ assembleInstruction(instrFieldsString,currAddrCount,jumpDb,equDirs,dbDirs){
 
     //Convert instruction
     var cop=this.copBytes;
-    var cost= this.parseConstantUnsigned(map["cost"],currAddrCount,jumpDb,equDirs,dbDirs);
+    var cost= this.parseConstantUnsigned(map["cost"],currAddrCount,jumpDb,equDirs,dbDirs,procsPublicDb);
     const binaryString=cop + cost;
     const hexString=this.nc.bin2hex(binaryString);
 
     return hexString
 }
 
-parseConstantUnsigned(n,currAddrCount,jumpDb,equDirs,dbDirs){
-    this.log.debug("Parsing variable: "+n)
+parseConstantUnsigned(n,currAddrCount,jumpDb,equDirs,dbDirs,procsPublicDb){
+    this.log.trace("Parsing variable: "+n)
     //CHECK FOR JUMPS
-    this.log.debug("Checking jumps")
+    this.log.trace("Checking jumps")
     this.log.trace(jumpDb)
     for(var k in jumpDb){
         if(n==k){
             var labelIndex=this.nc.hex2bin(jumpDb[k],26);
             labelIndex=this.nc.bin2decUnsigned(labelIndex);
-            this.log.debug("Label index: "+labelIndex)
-            this.log.debug("CurrAddrCount after pc<-pc+ws: "+currAddrCount)
+            this.log.trace("Label index: "+labelIndex)
+            this.log.trace("CurrAddrCount after pc<-pc+ws: "+currAddrCount)
             var offset=labelIndex-currAddrCount;
 
             
 
-            this.log.debug("Substituting "+n+" with "+offset)
+            this.log.trace("Substituting "+n+" with "+offset)
             //n=equDirs[k];
             this.log.trace("parsing decimal signed")
             return out=this.nc.dec2binSigned(offset,26)
@@ -53,25 +53,44 @@ parseConstantUnsigned(n,currAddrCount,jumpDb,equDirs,dbDirs){
         }
     }        
     
-    
+    this.log.trace("Checking jumps to procedures")
+    this.log.trace(procsPublicDb)
+    for(var k in procsPublicDb){
+        if(n==k){
+            var labelIndex=this.nc.hex2bin(procsPublicDb[k],26);
+            labelIndex=this.nc.bin2decUnsigned(labelIndex);
+            this.log.trace("Label index: "+labelIndex)
+            this.log.trace("CurrAddrCount after pc<-pc+ws: "+currAddrCount)
+            var offset=labelIndex-currAddrCount;
+
+            
+
+            this.log.trace("Substituting "+n+" with "+offset)
+            //n=equDirs[k];
+            this.log.trace("parsing decimal signed")
+            return out=this.nc.dec2binSigned(offset,26)
+
+            
+        }
+    }  
     
     //CHECH EQU OR DB DIRS
-    this.log.debug("Checking equDirs")
+    this.log.trace("Checking equDirs")
     //console.log(equDirs)
     for(var k in equDirs){
         //console.log(k)
         if(n==k){
-            this.log.debug("Substituting "+n+" with "+equDirs[k])
+            this.log.trace("Substituting "+n+" with "+equDirs[k])
             n=equDirs[k];
             
             break;
         }
     }
 
-    this.log.debug("Checking dbDirs")
+    this.log.trace("Checking dbDirs")
     for(var k in dbDirs){
         if(n==k){
-            this.log.debug("Substituting "+n+" with "+dbDirs[k])
+            this.log.trace("Substituting "+n+" with "+dbDirs[k])
             n=dbDirs[k];
             break;
         }

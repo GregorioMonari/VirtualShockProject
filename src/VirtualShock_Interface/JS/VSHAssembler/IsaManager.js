@@ -50,18 +50,18 @@ class IsaManager{
 
 
 
-    parseInstruction(instrString,currAddrCount,jumpDb,equDirs,dbDirs){
+    parseInstruction(instrString,currAddrCount,jumpDb,equDirs,dbDirs,procsPublicDb){
         this.log.trace(instrString)
         var instrArr=instrString.split(" ");
         var instrCop=instrArr[0].trim();
-        var instrFields=instrArr[1].trim();
+        var instrFields=instrString.replace(instrCop,"").trim();
         this.log.trace("Cop: "+instrCop)
         this.log.trace("Fields: "+instrFields)
 
         const instrObj=this.isaDB[instrCop];
 
 
-        return instrObj.assembleInstruction(instrFields,currAddrCount,jumpDb,equDirs,dbDirs)
+        return instrObj.assembleInstruction(instrFields,currAddrCount,jumpDb,equDirs,dbDirs,procsPublicDb)
     }
 
     getInstructionByCop(copName){
