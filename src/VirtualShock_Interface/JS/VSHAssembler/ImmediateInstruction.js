@@ -7,7 +7,7 @@ class ImmediateInstruction extends Instruction{
     //@OVERRIDE
     assembleInstruction(instrFieldsString){
 
-        this.log.trace("ASSEMBLING REGISTER INSTRUCTION")
+        this.log.trace("ASSEMBLING IMMEDIATE INSTRUCTION")
 
         var instrFieldsArr= instrFieldsString.split(",");
         this.log.trace(instrFieldsArr);
@@ -24,11 +24,43 @@ class ImmediateInstruction extends Instruction{
         var cop=this.copBytes;
         var rs1=this.nc.reg2bin(map["rs1"]);
         var rs2=this.nc.reg2bin(map["rs2"]);
-        var rd=this.nc.reg2bin(map["rd"]);
-        const binaryString=cop + rs1 + rs2 + rd + "00000000000";
+        var cost= this.parseConstantUnsigned(map["cost"]);
+        const binaryString=cop + rs1 + rs2 + cost;
         const hexString=this.nc.bin2hex(binaryString);
 
         return hexString
+    }
+
+    parseConstantUnsigned(n){
+        var costType=this.nc.getNumberType(n);
+        this.log.trace(costType)
+
+        var out=""
+        switch (costType) {
+            case "decimal":
+                out=this.nc.dec2binUnsigned(parseInt(n),16);
+                break;
+            case "binary":
+                var temp=n.slice(0,n.length-1)    
+                this.log.trace(temp)
+                if(temp.length<16){
+                    var left=16-temp.length;
+                    
+                    for(var i=0;i<left;i++){
+                        out=out+"0";
+                    }
+
+                    out=out+temp
+                }
+                break;
+            case "hexadecimal":
+                out=this.nc.hex2bin(n,16)
+                break;      
+            default:
+                break;
+        }
+
+        return out
     }
 
 }

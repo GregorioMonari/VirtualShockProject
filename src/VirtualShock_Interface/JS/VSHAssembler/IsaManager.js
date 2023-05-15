@@ -48,7 +48,9 @@ class IsaManager{
 
     }
 
-    parseInstruction(instrString){
+
+
+    parseInstruction(instrString,equDirs,dbDirs){
         this.log.trace(instrString)
         var instrArr=instrString.split(" ");
         var instrCop=instrArr[0].trim();
@@ -58,7 +60,8 @@ class IsaManager{
 
         const instrObj=this.isaDB[instrCop];
 
-        return instrObj.assembleInstruction(instrFields)
+        //TODO: ADD CONVERSION WITH EQU AND DB VARIABLES
+        return instrObj.assembleInstruction(instrFields,equDirs,dbDirs)
     }
 
     getInstructionByCop(copName){

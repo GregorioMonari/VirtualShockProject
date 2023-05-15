@@ -11,29 +11,9 @@ var editor=document.getElementById("AssemblyEditor")
 var mcPreview=document.getElementById("MachineCodePreview")
 var assembler= new VshAssembler();
 assemble()
-editor.textContent=`
-
-#include <stdio.h>
-
-a equ 10
-b equ 20
-c db 3
-
-proc main {
+editor.textContent=""
 
 
-
-    addi r1,r0,04Fh
-    add r2,r1,r0
-
-    addi r2, r1,00h
-}
-
-proc multiply{
-
-}
-
-`
 
 
 function assemble(){
@@ -53,12 +33,10 @@ function assemble(){
         addi r1,r0,04Fh
         add r29,r1,r0
     
-        addi r2, r1,00h
+        addi r2,r1,04fh
     }
     
-    proc multiply{
-    
-    }
+
     
     `);
     this.log.trace(machineCode)
