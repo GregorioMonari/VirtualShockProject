@@ -3,29 +3,40 @@
 <head>
 
     <title>VirtualShock ASSEMBLER</title>
+    <link rel="stylesheet" type="text/css" href="CSS/ace_rules.css">
     <link rel="stylesheet" type="text/css" href="CSS/main.css">
 </head>
 <body>
 
     <div id="topbar">
-        <h1>VIRTUALSHOCK ASSEMBLER</h1>
+        <h2>&nbsp;VIRTUALSHOCK ASSEMBLER</h2>
     </div>
 
     <div id="code-wrapper">  
 
         <div id="editor-wrapper">
-            <pre id="AssemblyEditor" contenteditable="true">
+            <div id="AssemblyEditor" contenteditable="true">
 
-            </pre>
+            </div>
             
             <div id="MachineCodePreview">
     
             </div>
         </div>
-        <button onclick="assemble()">assemble</button>
+        <div id="assemble-button-wrapper">
+            <button id="assemble-button" onclick="assemble()">assemble</button>
+        </div>
         <div id="console-wrapper">
             <div id="console-topbar">
-                <b>Output terminal</b>
+                <div id="console_title">
+                    <b>Output terminal </b>
+                </div>
+                <div id="output_result">
+                    |
+                </div>
+                <div id="close_terminal">
+                    <button onclick="switch_terminal()">X</button>
+                </div>
             </div>
             <div id="console">
 
@@ -33,10 +44,13 @@
         </div>
 
     </div>
+    
 
 
 
     <!--SCRIPTS-->
+    <script src="JS/lib/ace-editor-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+
     <script src="JS/lib/GregLogs/config.js"></script>
     <script src="JS/lib/GregLogs/GregLogs.js"></script>
     <script src="JS/VSHAssembler/core/NumberConversionManager.js"></script>

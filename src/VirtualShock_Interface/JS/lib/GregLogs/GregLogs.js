@@ -78,7 +78,7 @@ class GregLogs{
       }  
     }
     error(text){
-      console.log(get_current_timestamp()+this.separator+"[ERROR] ",text);
+      console.error(get_current_timestamp()+this.separator+"[ERROR] ",text);
       if(this.divLoggerEnabled){
         if(this.divLoggerLogLevel<4){
           this.element.innerHTML=this.element.innerHTML+get_current_timestamp()+this.separator+"[ERROR] "+text+"<br>";

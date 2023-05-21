@@ -4,12 +4,24 @@ body{
 }
 
 #topbar{
-
+    width: 100%;
+    height:5vh;
+    background: green;
+    margin:0;
+    padding:0;
+    display: flex;
+    align-items: center;
 }
+    #topbar h2{
+        margin:0;
+        padding:0;
+    }
+
 
 #code-wrapper{
-    padding: 2%;
-    width:96%;
+    padding: 0;
+    width:100%;
+    height: 95vh;
     background: red;
 }
 
@@ -20,35 +32,65 @@ body{
     background: white;
 }
     #AssemblyEditor{
-        width: 50%;
+        width: 80%;
         height:50vh;
-        overflow: scroll;
     }
 
     #MachineCodePreview{
         background: black;
         color: white;
-        width: 50%;
+        width: 20%;
         height:50vh;
-        overflow: scroll;
+        overflow-y: scroll;
     }
+
+#assemble-button-wrapper{
+    width:100%;
+    height:5vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+    #assemble-button{
+        width: 200px;
+        height: 30px;
+    }
+
 
 
 /*CONSOLE RULES*/
 #console-wrapper{
-    
+  position: relative;
+  bottom:0;  
+  width:100%;
+  height: 40vh;
 }
     #console-topbar{
         width: 100%; 
         background:white;
-        border-width:2px;
+        border-width:0px;
         border-style:solid;
+        display:flex;
+        align-items: center;
+        height: 3vh;
     }
+    #console_title{
+        width: 20%
+    }
+    #output_result{
+        width: 75%;
+    }
+    #close_terminal{
+        width:5%;
+    }
+        #close_terminal button{
+            border-radius: 50%;
+        }
     #console{
         width: 100%;
-        height: 30vh;
+        height: 37vh;
         background:green;
-        border-width:2px;
+        border-width:0px;
         border-style:solid;
         overflow: scroll;
         color:white;
