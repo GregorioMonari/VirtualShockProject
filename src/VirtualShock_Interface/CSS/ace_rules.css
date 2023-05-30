@@ -20,3 +20,6 @@
 .ace_function.ace_key{
     color: magenta;
 }
+.ace_function.ace_name{
+    color: rgb(221, 187, 136);
+}

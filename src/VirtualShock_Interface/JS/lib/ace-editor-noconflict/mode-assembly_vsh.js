@@ -33,28 +33,47 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
                     caseInsensitive: true 
                 },
                 {
+                    token: "function.key", // String, Array, or Function: the CSS token to apply
+                    regex: /proc* /, // String or RegExp: the regexp to match
+                    next:  "function_key"   // [Optional] String: next state to enter
+                }
+            ],
+            "function_key":[
+                {
+                    token: "function.name.main",
+                    regex: /(main *)(?={)/,
+                    next:  "function_body"
+                },
+                {
+                    token: "function.name",
+                    regex: /(.*)(?={)/,
+                    next:  "function_body"
+                }
+            ],
+            "function_body": [
+                {
                     token: "instruction", // String, Array, or Function: the CSS token to apply
                     regex: /add* /, // String or RegExp: the regexp to match
-                    next:  "start",   // [Optional] String: next state to enter
+                    next:  "function_body",   // [Optional] String: next state to enter
                     caseInsensitive: true 
                 },
                 {
                     token: "instruction.immediate", // String, Array, or Function: the CSS token to apply
                     regex: /addi* /, // String or RegExp: the regexp to match
-                    next:  "start",   // [Optional] String: next state to enter
+                    next:  "function_body",   // [Optional] String: next state to enter
                     caseInsensitive: true 
                 },
                 {
                     token: "instruction.jump", // String, Array, or Function: the CSS token to apply
                     regex: /j* /, // String or RegExp: the regexp to match
-                    next:  "start",   // [Optional] String: next state to enter
+                    next:  "function_body",   // [Optional] String: next state to enter
                     caseInsensitive: true 
                 },
                 {
-                    token: "function.key", // String, Array, or Function: the CSS token to apply
-                    regex: /proc* /, // String or RegExp: the regexp to match
-                    next:  "start"   // [Optional] String: next state to enter
-                }
+                    token: "function.end", // String, Array, or Function: the CSS token to apply
+                    regex: /( *})/, // String or RegExp: the regexp to match
+                    next:  "start",   // [Optional] String: next state to enter
+                },
             ]
         };
     };
