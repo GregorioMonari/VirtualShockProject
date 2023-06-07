@@ -5,11 +5,29 @@
     <title>VirtualShock ASSEMBLER</title>
     <link rel="stylesheet" type="text/css" href="CSS/ace_rules.css">
     <link rel="stylesheet" type="text/css" href="CSS/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
 
     <div id="topbar">
-        <h2>&nbsp;VIRTUALSHOCK ASSEMBLER</h2>
+        <div id="main-operations">
+            <div id="file">
+                File
+                <input id="choose-file" type="file">
+            </div>
+            <div id="directory">
+                File
+                <input id="choose-file" type="file">
+            </div>
+            
+            <button onclick="assemble()">assemble</button>
+            
+        </div>
+
+        <div id="opened-files-wrapper">
+            
+        </div>
+
     </div>
 
     <div id="code-wrapper">  
@@ -23,9 +41,7 @@
     
             </div>
         </div>
-        <div id="assemble-button-wrapper">
-            <button id="assemble-button" onclick="assemble()">assemble</button>
-        </div>
+
         <div id="console-wrapper">
             <div id="console-topbar">
                 <div id="console_title">
@@ -61,10 +77,16 @@
     <script src="JS/VSHAssembler/core/ImmediateInstruction.js"></script>
     <script src="JS/VSHAssembler/core/JumpInstruction.js"></script>
 
-    <script src="JS/VSHAssembler/CodeSlicer.js"></script>
+    <script src="JS/VSHAssembler/core/extended/CodeSlicer.js"></script>
+    <script src="JS/VSHAssembler/ModularCodeSlicer.js"></script>
     <script src="JS/VSHAssembler/IsaLoader.js"></script>
     <script src="JS/VSHAssembler/IsaManager.js"></script>
-    <script src="JS/VSHAssembler/VshAssembler.js"></script>
+    <script src="JS/VSHAssembler/core/extended/VshAssembler.js"></script>
+    <script src="JS/VSHAssembler/core/DependenciesTreeExtractor.js"></script>
+    <script src="JS/VSHAssembler/ModularVshAssembler.js"></script>
+
+    <script src="JS/FileSystem/base/FileSystemClient.js"></script>
+    <script src="JS/FileSystem/FileOperationsManager.js"></script>
 
     <script src="JS/main.js"></script>
 

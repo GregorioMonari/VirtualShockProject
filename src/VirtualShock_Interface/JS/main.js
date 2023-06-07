@@ -2,67 +2,110 @@ console.log("##########################")
 console.log("# VirtualShock Assembler #")
 console.log("##########################")
 
-
-var aceEditor = ace.edit("AssemblyEditor");
-aceEditor.setTheme("ace/theme/monokai");
-aceEditor.session.setMode("ace/mode/assembly_vsh");
-console.log("aceEditor initialized")
-//console.log(aceEditor.getValue())
-
-
-
-
-document.getElementById("console").innerHTML="MAO"
-
 var log=new GregLogs()
-var numberConverter= new NumberConversionManager();
+const fs=new FileSystemClient()
+const numberConverter= new NumberConversionManager();
+let _aceEditor;
+let _assembler;
+let _fileManager;
 
-var editor=document.getElementById("AssemblyEditor")
-var mcPreview=document.getElementById("MachineCodePreview")
-var assembler= new VshAssembler();
-//assemble()
-aceEditor.setValue(`#include <stdio.h>
 
-ab equ 10
-b equ 20
-c db 3
+init()
 
-proc main {
-    j mult
-    start: add r29, r1, r0
-           addi r2, r1, ab
-           j start
+async function init(){
+
+    //ACE EDITOR SETUP
+    _aceEditor = ace.edit("AssemblyEditor");
+    _aceEditor.setTheme("ace/theme/monokai");
+    _aceEditor.session.setMode("ace/mode/assembly_vsh");
+    console.log("_aceEditor initialized")
+    //console.log(_aceEditor.getValue())
+     
+    document.getElementById("console").innerHTML="MAO"
+    
+    //_assembler= new ModularVshAssembler(_mainFirstAddress,_variablesFirstAddress,_proceduresFirstAddress);
+    //this.mainFirstAddress=mainFirstAddress//"0000h"
+    //this.variablesFirstAddress=variablesFirstAddress//"0010h"
+    //this.proceduresFirstAddress=proceduresFirstAddress//"0fffh"
+    //assemble()
+    
+    _aceEditor.setValue(`
+    #include </module.ass>
+    #include </moduloBello.ass>
+    
+    ab equ 10
+    export b equ 20
+    c db 3
+    
+    proc main {
+        j mult
+        start: add r29, r1, r0
+               addi r2, r1, ASCII_A
+               j start
+    }
+    
+    
+    export proc mult{
+        start: addi r1, r0, 2
+               add r2, r1, r0
+               j start
+    }
+    
+    proc print{
+        addi r1, r2, 4h
+        j 0h
+    }
+    
+    `)
+
+    assemble()
+
+    //var dirs= await fs.ls("./");
+    //console.log("DIRECTORIES")
+    //console.log(dirs)
+    _fileManager= new FileOperationsManager()
+    _fileManager.start()
+
+    close_terminal()
+
 }
 
 
-proc mult{
-    start: addi r1, r0, 2
-           add r2, r1, r0
-           j start
+function on_file_window_selected(uid){
+    _fileManager.on_file_window_selected(uid)
 }
 
-proc print{
-    addi r1, r2, 4h
-    j 0h
-}
 
-`)
+
+
+
+
+
+
+
+
+
 
 
 
 
 //MAIN FUNCTION
-function assemble(){
+async function assemble(){
+    var editor=document.getElementById("AssemblyEditor")
+    var mcPreview=document.getElementById("MachineCodePreview")
     
     try{
     document.getElementById("console").innerHTML=""
-    
+    var _mainFirstAddress="0001h"
+    var _variablesFirstAddress="0010h"
+    var _proceduresFirstAddress="0fffh"
+    var assembler=new ModularVshAssembler(_mainFirstAddress,_variablesFirstAddress,_proceduresFirstAddress);
     this.log.info("##################################################")
     this.log.info("######[ Starting VirtualShock Assembler... ]######")
-    var rawText=aceEditor.getValue();//editor.innerText
+    var rawText=_aceEditor.getValue();//editor.innerText
     this.log.trace(rawText);
     var t0 = performance.now();
-    var out = assembler.assembleRawTxtAssembly(rawText);
+    var out = await assembler.assembleRawTxtAssembly(rawText);
     var mainMachineCode=out["mainMc"];
     var procMachineCode=out["procMc"];
 
@@ -72,15 +115,23 @@ function assemble(){
 
 
     mcPreview.innerHTML="<b> MAIN MEMORY</b><br>Address - Data";
+    var start=numberConverter.hex2bin(_mainFirstAddress);
+    start=numberConverter.bin2decUnsigned(start);
+    console.log("Start: "+start)
     for(var i in mainMachineCode){
-        var bin=numberConverter.dec2binUnsigned(i,16);
+        var currAddr=parseInt(start)+parseInt(i)
+        console.log(currAddr)
+        var bin=numberConverter.dec2binUnsigned(currAddr,16);
         var hex=numberConverter.bin2hex(bin)
         mcPreview.innerHTML=mcPreview.innerHTML+"<br>"+""+hex+":  0x"+mainMachineCode[i]
     }
 
     mcPreview.innerHTML=mcPreview.innerHTML+"<br><br><b> PROCEDURES</b><br>Address - Data";
+    start=numberConverter.hex2bin(_proceduresFirstAddress);
+    start=numberConverter.bin2decUnsigned(start);
     for(var i in procMachineCode){
-        var bin=numberConverter.dec2binUnsigned(i,16);
+        var currAddr=parseInt(start)+parseInt(i)
+        var bin=numberConverter.dec2binUnsigned(currAddr,16);
         var hex=numberConverter.bin2hex(bin)
         mcPreview.innerHTML=mcPreview.innerHTML+"<br>"+""+hex+":  0x"+procMachineCode[i]
     }
@@ -95,14 +146,27 @@ function assemble(){
         var el=document.getElementById("output_result")
         el.innerHTML="";
         el.innerHTML="Error: Assembling failed"
-        switch_terminal()
+        open_terminal()
     }
 }
 
 
-var console_shown=true;
+var console_shown=false;
 
-switch_terminal()
+function open_terminal(){
+    console.log("showing terminal")
+    document.getElementById("AssemblyEditor").style.height="50vh";
+    document.getElementById("MachineCodePreview").style.height="50vh";
+    document.getElementById("console").style.display="block";
+    console_shown=true;
+}
+function close_terminal(){
+    console.log("hiding terminal")
+    document.getElementById("AssemblyEditor").style.height="87vh";
+    document.getElementById("MachineCodePreview").style.height="87vh";
+    document.getElementById("console").style.display="none";
+    console_shown=false;  
+}
 
 function switch_terminal(){
     if(console_shown){

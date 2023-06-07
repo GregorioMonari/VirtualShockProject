@@ -1,0 +1,8 @@
+#include <\\moduloBello2.ass>
+
+ciao equ 10h
+i db 1
+
+proc stampa {
+  addi r1,r2,ciao
+}

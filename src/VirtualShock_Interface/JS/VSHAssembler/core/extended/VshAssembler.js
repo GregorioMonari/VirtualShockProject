@@ -5,7 +5,6 @@ class VshAssembler{
         //The ISA MANAGER is the only persistent db, do not recreate it every time
         //equ and db will vary 
         this.isaManager= new IsaManager();
-
         this.wordSize=1 //bytes
         var mainFirstAddress="0000h"
         var variablesFirstAddress="0010h"
@@ -25,7 +24,14 @@ class VshAssembler{
 
         this.log.info("** Getting code sections")
         var codeObj=this.codeSlicer.getCodeSections(cleanCode); //divide code into sections
-        this.log.trace(codeObj)
+        this.log.debug(codeObj)
+        this.log.debug(codeObj.Nprocs)
+        if(codeObj.Nprocs==0){
+            if(!codeObj.main.mainPresent){
+                this.log.debug(JSON.stringify(codeObj.main))
+                throw new Error("Invalid file")
+            }
+        }
 
         this.log.info("---------------------<ASSEMBLATION>--------------------")
         //var mainMachineCodeArr=this.assembleCodeObject(codeObj); //assemble main instructions

@@ -51,6 +51,7 @@ class CodeSlicer{
         res=this.sliceMainBlock(code);
         var mainBlock=res[0]; //MAIN
         var codeLeft=res[1];
+        var mainPresent=res[2];
 
         //GET PROCEDURES
         this.log.debug("(2/6) Slicing procedures")
@@ -124,7 +125,8 @@ class CodeSlicer{
             "main":{
                 "firstAddress":this.mainAddress,
                 "data":mainArr,
-                "jumpDb":jumpDb
+                "jumpDb":jumpDb,
+                "isPresent":mainPresent
             },
             "Nprocs":procedures.length,
             "procedures":allProcs,
@@ -176,9 +178,12 @@ class CodeSlicer{
         return [procName,block,leftslice+rightslice]
     }
 
-
+    
     sliceMainBlock(code){
         const re = new RegExp("proc *main *{");
+        if(!re.test(code)){
+            this.log.debug("Main not present in module")
+            return ["",code,false]}
         var res=re.exec(code);
         var index=res.index;
         this.log.trace(res)
@@ -188,7 +193,7 @@ class CodeSlicer{
         var mainBlock=code.slice(openBracketIndex+1,closedBracketIndex);
         var leftslice=code.slice(0,index);
         var rightslice=code.slice(closedBracketIndex+1,code.length)
-        return [mainBlock,leftslice+rightslice]
+        return [mainBlock,leftslice+rightslice,true]
     }
 
     getDirs(cleanCode){
@@ -235,6 +240,7 @@ class CodeSlicer{
         })
 
         this.log.trace("Extracted dbDirs: "+dbDirs)
+
         return [equDirs,dbDirs]
     }
     

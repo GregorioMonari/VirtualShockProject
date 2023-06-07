@@ -1,0 +1,26 @@
+#include <stdio.h>
+    
+    ab equ 10
+    b equ 20
+    c db 3
+    
+    proc main {
+        j mult
+        start: add r29, r1, r0
+               addi r2, r1, ab
+               j start
+    }
+    
+    
+    proc mult{
+        start: addi r1, r0, 2
+               add r2, r1, r0
+               j start
+    }
+    
+    proc print{
+        addi r1, r2, 4h
+        j 0h
+    }
+    
+    
