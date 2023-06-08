@@ -32,7 +32,17 @@ class DependenciesTreeExtractor{
             var currIndex=this.depArr.length;
             depTree[currIndex]={}
             try{
-                var file=await this.fileManager.readFile(filePath)
+                var file
+                try{
+                    file=await this.fileManager.readFile(filePath)
+                }catch(e){
+                    this.log.error(e)
+                    this.log.info("Trying to import file from std modules")
+                    var stdModulesPath="C:\\Users\\Utente\\git\\VirtualShockProject\\src\\VirtualShock_interface\\JS\\VSHAssembler\\resources\\vsh_std_lib\\"+fileDepArr[i]+".ass"
+                    file=await this.fileManager.readFile(stdModulesPath)
+                }
+
+                
                 
                 this.depArr.push({
                     "txt":file,
@@ -44,7 +54,7 @@ class DependenciesTreeExtractor{
                 this.depArr[currIndex].deps=Object.keys(depTree[currIndex])
 
             }catch(e){
-                console.error("MODULE "+filePath+" DOES NOT EXIST")
+                this.log.error("MODULE "+filePath+" DOES NOT EXIST")
                 throw new Error(e)
             }
             

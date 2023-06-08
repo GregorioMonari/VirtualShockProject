@@ -9,6 +9,7 @@ class FileOperationsManager{
 
     start(){
         this.attach_open_file_listener()
+        this.restore_session()
     }
 
     attach_open_file_listener(){
@@ -19,7 +20,59 @@ class FileOperationsManager{
          }
     }
 
+    async save_current_file(){
+        console.log(" ")
+        var currUid=this.currentFileUid
+        var text=_aceEditor.getValue()
+        //this.log.info(text)
+        this.update_file_value_in_cache(currUid,text)
+        this.log.info("Updating file with uid: "+currUid);
+        var file=this.getFileByUid(parseInt(currUid));
+        this.log.info("Set editor with file: "+file.path)
+        await this.fs.writeFile(file.path,{"rawTxt":text})
+
+    }
+
+    async restore_session(){
+        var appDbPath="C:\\Users\\Utente\\git\\VirtualShockProject\\src\\VirtualShock_interface\\JS\\VSHAssembler\\resources\\.appmem.json"
+
+        var appConfTxt=await this.fs.readFile(appDbPath)
+        var jsonAppConf=JSON.parse(appConfTxt);
+
+        for(var i in jsonAppConf.opened_tabs){
+            var file=jsonAppConf.opened_tabs[i]
+            var txt=await this.fs.readFile(file.path)
+            //TODO: save file on file open
+            var fileUid=this.getUid()
+            this.add_file_to_cache(file.name,file.path,txt)
+            this.currentFileUid=fileUid;
+    
+            
+            console.log(fileUid)
+            _aceEditor.setValue(txt)
+            this.openedFilesDiv().innerHTML=this.openedFilesDiv().innerHTML+`
+            <div class="file_window_icon" id="file_window_icon-${fileUid}" onclick="on_file_window_selected(${fileUid})">
+                ${file.name}
+            </div>
+            `
+            this.log.debug(this.openedFilesCache)
+        }
+
+    }
+
+
     async on_file_open(file){
+        var appDbPath="C:\\Users\\Utente\\git\\VirtualShockProject\\src\\VirtualShock_interface\\JS\\VSHAssembler\\resources\\.appmem.json"
+
+        var appConfTxt=await this.fs.readFile(appDbPath)
+        var jsonAppConf=JSON.parse(appConfTxt);
+        jsonAppConf.opened_tabs.push({
+            "path":file.path,
+            "name":file.name
+        })
+        var newAppConfTxt=JSON.stringify(jsonAppConf);
+        await this.fs.writeFile(appDbPath,newAppConfTxt)
+
         var txt=await this.fs.readFile(file.path)
         //TODO: save file on file open
         var fileUid=this.getUid()

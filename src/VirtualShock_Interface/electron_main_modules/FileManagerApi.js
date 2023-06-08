@@ -49,20 +49,16 @@ class FileManagerApi{
       this.router.post('/api/filesystem/write', (request,response)=>{
         console.log(`received AW api POST request: ${request.originalUrl}`)
         
-        axios.post(rootUrl+request.originalUrl,request.body,config)
-          .then(function (res) {
-            // handle success
-            console.log(res.data);
-            response.status(res.status).json(res.data);
-          })
-          .catch(function (error) {
-            // handle error
-            console.log(error);
-            response.status(error.response.status).json(error.response.data);
-          })
-          .finally(function () {
-            console.log("Served api POST request")
-          });
+        var filePath=request.query["file"]
+        var body=request.body
+        if(body.hasOwnProperty("rawTxt")){
+          this.fm.write(filePath,body.rawTxt)
+          response.status(200).json("{\"status\":\"ok\"}");          
+        }else{
+          this.fm.write(filePath,JSON.stringify(body))
+          response.status(200).json("{\"status\":\"ok\"}");
+        }
+
 
       });
 

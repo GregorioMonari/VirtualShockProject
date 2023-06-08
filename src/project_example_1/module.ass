@@ -1,7 +1,6 @@
 #include <\\module2.ass>
 
 export ciao equ 0fdh
-export ASCII_A equ 0eh
 i db 1
 
 export proc stampa {

@@ -181,8 +181,13 @@ class ModularVshAssembler extends VshAssembler{
         this.log.debug(codeObj.Nprocs)
         if(codeObj.Nprocs==0){
             if(!codeObj.main.mainPresent){
-                this.log.debug(JSON.stringify(codeObj.main))
-                throw new Error("Invalid file")
+                //this.log.debug(JSON.stringify(codeObj.main))
+                if(Object.keys(codeObj.equ).length==0 &&
+                Object.keys(codeObj.db).length==0
+                ){
+                    throw new Error("Invalid file")
+                }
+                
             }
         }
 

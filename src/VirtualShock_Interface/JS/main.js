@@ -29,9 +29,10 @@ async function init(){
     //this.proceduresFirstAddress=proceduresFirstAddress//"0fffh"
     //assemble()
     
-    _aceEditor.setValue(`
+    /*_aceEditor.setValue(`
     #include </module.ass>
     #include </moduloBello.ass>
+    #include <ascii_table>
     
     ab equ 10
     export b equ 20
@@ -58,7 +59,7 @@ async function init(){
     
     `)
 
-    assemble()
+    assemble()*/
 
     //var dirs= await fs.ls("./");
     //console.log("DIRECTORIES")
@@ -70,6 +71,9 @@ async function init(){
 
 }
 
+function save_current_file(){
+    _fileManager.save_current_file()
+}
 
 function on_file_window_selected(uid){
     _fileManager.on_file_window_selected(uid)
@@ -96,9 +100,9 @@ async function assemble(){
     
     try{
     document.getElementById("console").innerHTML=""
-    var _mainFirstAddress="0001h"
+    var _mainFirstAddress="0000h"
     var _variablesFirstAddress="0010h"
-    var _proceduresFirstAddress="0fffh"
+    var _proceduresFirstAddress="1000h"
     var assembler=new ModularVshAssembler(_mainFirstAddress,_variablesFirstAddress,_proceduresFirstAddress);
     this.log.info("##################################################")
     this.log.info("######[ Starting VirtualShock Assembler... ]######")
