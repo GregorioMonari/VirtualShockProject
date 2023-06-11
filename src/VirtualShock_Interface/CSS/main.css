@@ -22,17 +22,27 @@ body{
 
     #opened-files-wrapper{
         display: flex;
+        
     }
-    .file_window_icon{
-        background: red;
+    .file_window_icon_wrapper{
+        display:flex;
+        justify-content:left;
         margin-right: 10px;
     }
+    .file_window_icon_wrapper:hover{
+        cursor:pointer
+    }
+        .file_window_icon{
+            background: red;
+            padding-left:5px;
+            padding-right:5px;
+        }
 
 
 #code-wrapper{
     padding: 0;
     width:100%;
-    height: 95vh;
+    height: 94vh;
     background: red;
 }
 

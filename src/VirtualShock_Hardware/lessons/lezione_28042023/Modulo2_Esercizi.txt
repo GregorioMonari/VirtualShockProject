@@ -1,0 +1,155 @@
+ISTRUZIONI NOTEVOLI
+cod: ADD R4 R7 R2   | add rs1 rs2 rd
+ass: ADD R2, R4, R7 | add rd, rs1, rs2
+
+cod: ADDI R10 R6 1A0EH   | addi rs1 rd opimm
+ass: ADDI R6, R10, 1A0EH | addi rd, rs1, opimm
+
+cod: SW R1 R6 10h (I) | sw rs1 rs2 opimm
+ass: SW 10H(R1),R6    | sw opimm(rs1), rs2
+
+cod: LW R10 R2 100h   | lw rs1 rd
+ass: LW R2, 100H(R10) | lw rd, opimm(rs1)
+
+
+LA IF INTANTO MOSTRA LOGICA DI CONFRONTO , OGNI QUADRATINO O ROMBO E' UN CLOCK
+Logica di confronto nell'UDC
+
+
+----------------------------------------------
+ES_1 (NO MODIFICHE, E' UNA R BASE)
+LWZ Rz,Rx,Ry 
+LWZ R7,R3,R5
+AC653800h
+
+
+
+
+
+if (M[Rx] != 0) {
+  Rz <- M[Rx] 
+ } else if (M[Ry] != 0) {
+    Rz <- M[Rx+Ry]
+ }
+
+
+
+
+
+
+Nell’ipotesi che tutti gli accessi alla memoria possano essere completati in 2 clock (ovvero che ogni accesso alla memoria richieda 1 stato di wait)  si riporti il CPI della nuova istruzione nel caso peggiore:
+CPI CASO PEGGIORE: 16
+Sempre nelle stesse ipotesi e considerando una frequenza di funzionamento della CPU pari a 8 MHz, quanto tempo impiega il DLX ad eseguire la nuova istruzione nel caso peggiore?
+CPUTIME=2.00us
+
+
+
+COME GESTISCO PUSH E POP? A-4 COME LO FA L'ALU? COME CODIFICO I REGISTRI?
+INTRO STACK PIATTI E STACK POINTER
+----------------------------------------------
+ES_2: STACK POINTER PUNTA ALL'ULTIMA CELLA OCCUPATA - TUTTE IMMEDIATE
+a. PUSH r30, rx, r30 ? NO USA QUELLE DI VIRTUALSHOCK E' REGISTER
+IR<=M[PC] 
+A<=rs1, B<=rs2 //a=r30, B=rx
+
+MAR<=A-4, C<=A-4
+MDR<=B, rd<=C
+M[MAR]<=MDR
+
+
+
+----------------------------------------------
+ES_3
+a. POP r30, rx, r30 (dobbiamo poter scrivere sulla porta di lettura rs2) E' IMMEDIATE
+IR<=M[PC]
+A<=rs1, B<=rs2 //a=r30, b=rx
+
+MAR<=A
+MDR<=M[MAR], C<=A+4
+rs1<=C, C<=MDR
+rs2<=C
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#BACKUP============================================================================================================================================================================
+----------------------------------------------
+ES_1 (EVITA DI FARLO)
+a. Formato CALLIF R1, R2 (REGISTER)
+00111100001000101111000000000000
+occorre leggere dalla porta di scrittura del register file (R30 come rdest)
+
+b. Si vuole estendere il DLX visto a lezione con la seguente nuova istruzione CALLIF Rx,Ry:
+if (Ry > 0) {
+  R30 <- R30 - 4
+  M[R30] <- PC + 4
+  PC <- Rx
+}
+
+c. CPI nuova istruzione
+Nell’ipotesi che tutti gli accessi alla memoria possano essere completati in 3 clock (ovvero che ogni accesso alla memoria richieda 2 stati di wait) si riporti il CPI della nuova istruzione:
+CALLIF Rx,Ry CPI: 11 (se Ry > 0) 5 (else)
+Calcolo del CPU time
+Sempre nelle stesse ipotesi e considerando una frequenza di funzionamento della CPU pari a 10 GHz, si calcoli il CPUtime relativo al codice sotto riportato, indicando i clocks necessari per ogni passaggio.
+Frammento di codice
+ADDI R1,R0,1000H clocks: 4
+ADDI R2,R0,5 clocks: 4
+CALLIF R1,R2 clocks: ?
+Numero totale di clocks: 23
+CPUTime = 2.3ns
+Nota: indicare il risultato usando il "." come separatore decimale, troncato alla prima cifra (es. 183.7)
+
+
+
+
+
+
+
+PER I CONFRONTI IL RETTANGOLO VALE 0 O 1 CLOCK? CHIEDI A LUCA 
+----------------------------------------------
+Somma del vettore
+addmem
+push e pop, uno 
+microcodice
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

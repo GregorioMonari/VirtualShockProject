@@ -1,16 +1,15 @@
 #include <ascii_table>
 #include <\\module.ass>
-ab equ 10
+acb equ 5ch
 b equ 20
 c db 3
     
 proc main {
     j stampa
     start: add r29, r1, r0
-           addi r2, r1, ASCII_a
+           addi r2, r1, icaro
            j start
 }
-    
     
 proc mult{
     start: addi r1, r0, 2

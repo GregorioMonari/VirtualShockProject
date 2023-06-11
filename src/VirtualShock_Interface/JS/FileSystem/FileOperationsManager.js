@@ -50,11 +50,7 @@ class FileOperationsManager{
             
             console.log(fileUid)
             _aceEditor.setValue(txt)
-            this.openedFilesDiv().innerHTML=this.openedFilesDiv().innerHTML+`
-            <div class="file_window_icon" id="file_window_icon-${fileUid}" onclick="on_file_window_selected(${fileUid})">
-                ${file.name}
-            </div>
-            `
+            this.openedFilesDiv().innerHTML=this.openedFilesDiv().innerHTML+this.get_new_tab_div(fileUid,file)
             this.log.debug(this.openedFilesCache)
         }
 
@@ -82,16 +78,25 @@ class FileOperationsManager{
         
         console.log(fileUid)
         _aceEditor.setValue(txt)
-        this.openedFilesDiv().innerHTML=this.openedFilesDiv().innerHTML+`
-        <div class="file_window_icon" id="file_window_icon-${fileUid}" onclick="on_file_window_selected(${fileUid})">
-            ${file.name}
-        </div>
-        `
+        this.openedFilesDiv().innerHTML=this.openedFilesDiv().innerHTML+this.get_new_tab_div(fileUid,file)
         this.log.debug(this.openedFilesCache)
         /*
         document.getElementById("file_window_icon-"+fileUid).onclick = async (e) => { 
             this.on_file_window_selected(e)
          }*/
+    }
+
+    get_new_tab_div(fileUid,file){
+        return `
+        <div class="file_window_icon_wrapper">
+            <div class="file_window_icon" id="file_window_icon-${fileUid}" onclick="on_file_window_selected(${fileUid})">
+                ${file.name}
+            </div>
+            <button>
+            x
+            </button>
+        </div>
+        `
     }
 
     on_file_window_selected(uid){

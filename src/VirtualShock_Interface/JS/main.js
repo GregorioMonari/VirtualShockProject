@@ -14,6 +14,11 @@ init()
 
 async function init(){
 
+    rtlm=new RtlManager()
+    rtlm.test()
+
+    throw new Error("MAO")
+
     //ACE EDITOR SETUP
     _aceEditor = ace.edit("AssemblyEditor");
     _aceEditor.setTheme("ace/theme/monokai");

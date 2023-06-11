@@ -1,3 +1,4 @@
+export icaro equ e7h
 export ASCII_a equ 61h
 export ASCII_b equ 62h
 export ASCII_c equ 63h

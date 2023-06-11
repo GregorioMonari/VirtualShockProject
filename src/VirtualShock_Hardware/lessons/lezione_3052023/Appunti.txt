@@ -1,0 +1,89 @@
+Si parte dalla fine (dalle due ram), poi vai verso IR
+CI SONO DUE PARTI: AUTOMAZIONE E PROGRAMMAZIONE. Oggi facciamo AUTOMAZIONE. La programmazione comprende IR e la memoria dlx
+
+-------------------------
+AUTOMATION WITH MICROCODE
+-------------------------
+#LAVAGNA
+0-Recap ultima slide prof(per realizzare rete sequenziale troppo complesso, si fa microcodice)
+1-Mappatura dei segnali di controllo
+2-Associazione tra RTL e udc come rete sequenziale
+3-Gli output nel tempo si possono rappresentare con delle memorie e indirizzi
+
+#LOGISIM
+4-Costruzione RAM
+5-Caricamento codice rtl nella ram e verifica gli output nel tempo
+- rappresenta i comandi secondo la tua codifica e trova le stringhe di bit corrispondenti per una addi
+#ADDI--------------------------------------------------------------------------
+COP MEMORY
+COP: 000000
+TYPE: I (01)
+IND1: 0000h
+CPI:3
+celldata: 01 0000 0000 0000 0000 0011 = 100003h
+
+RTL
+IR<- M[PC] Carico cop, registri e costante in IR, ma adesso lo settiamo manuale
+PC<-PC+4, A<-RS1, B<-RS2
+wepc14, oe1pc15, +4->31?, weA5, weB8, M4
+rom_1:  1000 0000 0000 0000 1100 0001 0011 0000 = 8000c130h
+rs1_en9, rs2_en8
+rom_2: 0000 0011 0000 0000 = 0300h
+
+C<-A+cost
+wrC11, oe1A6, M4
+rom_1:  0000 0000 0000 0000 0000 1000 0101 0000 = 00000850h
+cen6
+rom_2: 0000 0000 0100 0000 = 0040h
+
+RD<-C
+oe1C12
+rom_1:  0000 0000 0000 0000 0001 0000 0000 0000 = 00001000h
+rd_en7
+rom_2: 0000 0000 1000 0000 = 0080h
+
+
+#JUMP REGISTER------------------------------------------------------------
+COP MEMORY
+COP: 000001
+TYPE: R (00)
+IND1: 0003h
+CPI:2
+celldata: 00 0000 0000 0000 0011 0010 = #000032h
+
+RTL
+IR<- M[PC] Carico cop, registri e costante in IR, ma adesso lo settiamo manuale
+PC<-PC+4, A<-RS1, B<-RS2
+wepc14, oe1pc15, +4->31?, weA5, weB8, M4
+rom_1:  1000 0000 0000 0000 1100 0001 0011 0000 = 8000c130h
+rs1_en9, rs2_en8
+rom_2: 0000 0011 0000 0000 = 0300h
+
+PC<-A
+wepc14, oe1A6, c1(1)
+rom_1:  0000 0000 0000 0000 0100 0000 0100 0010 = 00004042h
+
+#LAVAGNA
+6-Caso di due istruzioni e bug 
+
+#LOGISIM
+7-Costruzione segnale di reset counter
+
+#ESECUZIONE CON DATAPATH (LOGISIM)
+spiega come faccio il parsing dei registri
+spiega aggiunta della seconda ram
+esegui addi e jr
+
+ASSEMBLY:
+addi r1,r1,4
+jr r1 -> pc diventa 4
+
+
+
+
+
+muxpc30, oe2pc16
+0100 0000 0000 0001 0000 0000 0000 0000 = 40010000h
+
+
+
