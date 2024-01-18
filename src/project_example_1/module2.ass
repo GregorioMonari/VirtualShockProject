@@ -1,6 +1,0 @@
-mao equ 20h
-i db 1
-
-proc stampamao {
-  addi r1,r2,mao
-}
