@@ -1,19 +1,26 @@
-<div>
-  HEADER
-</div>
-<!--Horizontal-->
-<div>
-  <div>
-    SIDEBAR
+<!--CONTAINER, ACT LIKE ROWS-->
+<div class="bg-cyan-200 flex flex-col h-screen w-screen">
+  <div class="bg-slate-400 w-screen">
+    HEADER
   </div>
-  <!--Vertical-->
-  <div>
+  <!--Horizontal-->
+  <div class="flex h-full w-full">
     <div>
-      CODE
+      <app-sidebar></app-sidebar>
     </div>
-    <div>
-      TERMINAL
+    <!--Vertical-->
+    <div class="flex flex-col bg-slate-500 h-full w-full">
+      <div class="flex-grow">
+        <app-code-editor></app-code-editor>
+      </div>
+      <div>
+        <app-terminal></app-terminal>
+      </div>
     </div>
+  
   </div>
-
+  <!--Footer-->
+  <div>
+    <app-footer></app-footer>
+  </div>
 </div>
