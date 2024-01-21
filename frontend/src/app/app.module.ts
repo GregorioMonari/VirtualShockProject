@@ -9,6 +9,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { TerminalComponent } from './components/terminal/terminal.component';
 import { CodeEditorComponent } from './components/code-editor/code-editor.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { CodeEditorComponent } from './components/code-editor/code-editor.compon
     SidebarComponent,
     FooterComponent,
     TerminalComponent,
-    CodeEditorComponent
+    CodeEditorComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

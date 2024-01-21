@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import SimulationService from 'src/app/services/simulation.service';
 
 @Component({
     selector: 'app-terminal',
@@ -6,6 +7,18 @@ import { Component } from '@angular/core';
     styleUrls: ['./terminal.component.css'],
   })
   export class TerminalComponent {
-    constructor(
-    ) {}
+    public $machineOutput:String=">";
+    constructor(private simulation: SimulationService) {}
+
+    ngOnInit(){
+      this.simulation.getMachineOutput().subscribe(
+       (value)=>{
+          console.log("Received change!") 
+          this.$machineOutput=value;
+       },
+       (error)=>{
+          console.log("ERRORE!!")
+       })
+    }
+
   }

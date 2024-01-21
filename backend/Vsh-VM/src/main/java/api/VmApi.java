@@ -1,10 +1,12 @@
 package api;
+import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.io.IOException;
@@ -16,26 +18,42 @@ import com.google.gson.JsonObject;
 
 import Vm.ProgramLoader;
 import Vm.VshVirtualMachine;
+import api.CorsFilter;
+
 public class VmApi {
     private final int port;
     private final String basePath;
+    private HttpServer server;
+    private List<HttpContext> contexts=new ArrayList<>();
+
+    // CONSTRUCTOR
     public VmApi(int port,String basePath){
         this.port=port;
         this.basePath=basePath;
     }
 
     // Starts the API
-    public void start() throws IOException {
+    public void start() throws IOException{
         // Create an HTTP server that listens on port 8080
-        HttpServer server = HttpServer.create(new InetSocketAddress(this.port), 0); //default: 8084
-        // Create a context for the "/api/hello" endpoint
-        server.createContext(this.basePath+"/ping", new PingHandler());
-        server.createContext(this.basePath+"/execute", new ExecuteProgramHandler());
+        server = HttpServer.create(new InetSocketAddress(this.port), 0); //default: 8084
+        // Link endpoints paths with handlers
+        initContexts();
         // Start the server
         server.start();
-
         System.out.println("Server started on port "+this.port);
     }
+
+
+    private void initContexts(){
+        // Create a context for the endpoints
+        contexts.add(server.createContext(this.basePath+"/ping", new PingHandler()));
+        contexts.add(server.createContext(this.basePath+"/execute", new ExecuteProgramHandler()));
+        // Add cors to all context
+        for(HttpContext context: contexts){
+            context.getFilters().add(new CorsFilter()); // Add CORS filter
+        }
+    }
+
 
     // Custom handler for the "/api/hello" endpoint
     static class PingHandler implements HttpHandler {
@@ -43,7 +61,7 @@ public class VmApi {
         public void handle(HttpExchange exchange) throws IOException {
             System.out.println("Received ping request");
             // Send a simple response
-            String response = "Hello from VSH Api!";
+            String response = "{\"status\":\"OK\",\"message\":\"Hello from VSH Api!\"}";
             exchange.sendResponseHeaders(200, response.length());
 
             try (OutputStream os = exchange.getResponseBody()) {
@@ -52,6 +70,7 @@ public class VmApi {
         }
     }
 
+    // Custom handler for the "/api/execute" endpoint
     static class ExecuteProgramHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
@@ -115,13 +134,19 @@ public class VmApi {
                 System.out.println("\n** Launching Virtual Shock VM");
                 System.out.println("---Program-Output---");
                 String out=vm.start(false);
-                response="{\"output\":\""+out+"\"}";
+                //response="{\"output\":\""+out+"\"}";
+                String parsedOut=out.replace("\n","\\n"); //"porcodio\nmadonnina";
+                response="{\"output\":\""+parsedOut+"\"}";
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
             return response;
         }
 
+    }
+
+    public void stop(){
+        this.server.stop(120);
     }
 
 }

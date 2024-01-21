@@ -7,14 +7,21 @@ import APIService from 'src/app/services/api.service';
     styleUrls: ['./footer.component.css'],
   })
   export class FooterComponent {
+    public $apiConnectionStatus:String; //accessible by component html
     constructor(
       private api:APIService
-    ) {}
+    ) {
+      this.$apiConnectionStatus="connecting";
+    }
 
     ngOnInit(){
-      const result = this.api.pingVmApi();
-      result.subscribe((value)=>{
-        console.log(value)
+      const result = this.api.ping();
+      result.subscribe(
+      (value)=>{
+        this.$apiConnectionStatus="connected";
+      },
+      (error)=>{
+        this.$apiConnectionStatus="disconnected";
       })
     }
   }
