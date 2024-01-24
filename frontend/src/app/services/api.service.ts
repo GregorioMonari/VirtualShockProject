@@ -39,14 +39,26 @@ export default class APIService {
         }),
         catchError(this.handleError)
       );
-  }
+    }
+
+    assemble(rawText:string){
+      console.log("Assembling code...")
+      const rootPath = 'http://localhost:3005/vshapi';
+      const requestBody={source:"raw",value:"rawText"}//"./testProgram.txt"
+      return this.http.post(`${rootPath}/assemble`,requestBody).pipe(
+        map((payload: any) => {
+          return payload as ExecutionApiResponse;
+        }),
+        catchError(this.handleError)
+      );
+    }
     
     private handleError(error: HttpErrorResponse): Observable<never> {
-        if (error.status == 404) {
-            return throwError(() => new Error('404: Resource not found'));
-        }
-        console.log(error)
-        return throwError(() => new Error('Unknown error while performing Vm api request'));
+      if (error.status == 404) {
+          return throwError(() => new Error('404: Resource not found'));
+      }
+      console.log(error)
+      return throwError(() => new Error('Unknown error while performing Vm api request'));
     }
 
     

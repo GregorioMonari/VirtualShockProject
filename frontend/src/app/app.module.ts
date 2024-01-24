@@ -10,6 +10,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { TerminalComponent } from './components/terminal/terminal.component';
 import { CodeEditorComponent } from './components/code-editor/code-editor.component';
 import { HeaderComponent } from './components/header/header.component';
+import { TabsComponent } from './components/tabs/tabs.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HeaderComponent } from './components/header/header.component';
     FooterComponent,
     TerminalComponent,
     CodeEditorComponent,
-    HeaderComponent
+    HeaderComponent,
+    TabsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,7 @@
+<div class="flex w-full" #editor>
+    <div *ngFor="let id of $tabs.keys()">
+        <div (click)="onTabClick(id)" class="pl-1 pr-1 cursor-pointer">
+            {{$tabs.get(id)?.name}}<span *ngIf="!$tabs.get(id)?.isSaved">&nbsp;*</span>
+        </div>
+    </div>
+</div>

@@ -1,11 +1,39 @@
 import { Component } from '@angular/core';
+import { AfterViewInit, ElementRef, ViewChild } from "@angular/core"
+
+import * as ace from "ace-builds"
+
+import TabsService from 'src/app/services/tabs.service';
 
 @Component({
     selector: 'app-code-editor',
     templateUrl: './code-editor.component.html',
     styleUrls: ['./code-editor.component.css'],
   })
-  export class CodeEditorComponent {
-    constructor(
-    ) {}
+  export class CodeEditorComponent implements AfterViewInit {
+    private aceEditor!:ace.Ace.Editor;
+    @ViewChild("editor") private editor!: ElementRef<HTMLElement>; //il punto esclamativo assicura a ts che sicuramente inizializzo la variabile nel codice
+
+    constructor(private tabs:TabsService){}
+
+    ngAfterViewInit(): void {
+      //ace.config.set("fontSize","50p");
+      ace.config.set('basePath', 'https://unpkg.com/ace-builds@1.4.12/src-noconflict');
+      this.aceEditor=ace.edit(this.editor.nativeElement)
+
+      this.aceEditor.session.setValue("<h1>Ace editor component works!</h1>")
+      this.aceEditor.setTheme('ace/theme/twilight');
+      this.aceEditor.session.setMode('ace/mode/javascript');
+
+      this.tabs.setEditor(this.aceEditor)
+      /*
+      const tabId1=this.tabs.addTab("main.js","function main(){}","./")
+      this.tabs.setCurrentTab(tabId1);
+
+      const tabId2=this.tabs.addTab("prog.asm","addi r1,r2,r3","./")
+      this.tabs.setCurrentTab(tabId2);
+      */
+
+
+    }
   }
