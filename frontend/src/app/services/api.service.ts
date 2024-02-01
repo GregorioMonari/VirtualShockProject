@@ -44,7 +44,7 @@ export default class APIService {
     assemble(rawText:string){
       console.log("Assembling code...")
       const rootPath = 'http://localhost:3005/vshapi';
-      const requestBody={source:"raw",value:"rawText"}//"./testProgram.txt"
+      const requestBody={source:"raw",value:rawText}//"./testProgram.txt"
       return this.http.post(`${rootPath}/assemble`,requestBody).pipe(
         map((payload: any) => {
           return payload as ExecutionApiResponse;

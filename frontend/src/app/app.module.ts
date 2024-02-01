@@ -11,6 +11,7 @@ import { TerminalComponent } from './components/terminal/terminal.component';
 import { CodeEditorComponent } from './components/code-editor/code-editor.component';
 import { HeaderComponent } from './components/header/header.component';
 import { TabsComponent } from './components/tabs/tabs.component';
+import { ControlsComponent } from './components/controls/controls.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TabsComponent } from './components/tabs/tabs.component';
     TerminalComponent,
     CodeEditorComponent,
     HeaderComponent,
-    TabsComponent
+    TabsComponent,
+    ControlsComponent
   ],
   imports: [
     BrowserModule,

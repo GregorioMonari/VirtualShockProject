@@ -27,6 +27,10 @@ export default class SimulationService {
     setMachineOutput(output: string): void {
         this.machineOutput.next(output);
     }
+    appendMachineOutput(output:string): void{
+        //TODO
+        throw new Error("Not implemented")
+    }
     getMachineOutput(): Observable<string> {
         return this.machineOutput.asObservable();
     }
