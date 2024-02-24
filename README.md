@@ -1,6 +1,9 @@
 # VirtualShockProject
+![virtualshock](img/VirtualShock.png)
 ## Introduction
-VirtualShock project allows to **write, test and run assembly code** in a simple and visual way.
+VirtualShock project allows to **write, test and run assembly code** in a simple and visual way.  
+Based on my bachelor's degree thesis: https://amslaurea.unibo.it/25411/  
+
 
 ## Modules
 - `hardware`: logisim components, ram and roms
@@ -15,11 +18,7 @@ VirtualShock project allows to **write, test and run assembly code** in a simple
 `docker-compose up`
 3. Cd into the Frontend folder:  
 `cd ./frontend`
-4. Launch Angular frontend:
+4. Launch Angular frontend:  
 `ng serve`
-5. Open a browser and go to url:
+5. Open a browser and go to url:  
 `http://localhost:4200`
-
-## Issues
-Warning: D:\HomeBase\git\VirtualShockProject\frontend\src\app\components\code-editor\code-editor.component.ts depends on 'ace-builds'. CommonJS or AMD dependencies can cause optimization bailouts.
-For more info see: https://angular.io/guide/build#configuring-commonjs-dependencies
