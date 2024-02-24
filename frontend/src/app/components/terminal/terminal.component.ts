@@ -7,14 +7,14 @@ import SimulationService from 'src/app/services/simulation.service';
     styleUrls: ['./terminal.component.css'],
   })
   export class TerminalComponent {
-    public $machineOutput:String=">";
+    public $machineOutput:String="";
     constructor(private simulation: SimulationService) {}
 
     ngOnInit(){
       this.simulation.getMachineOutput().subscribe(
        (value)=>{
           console.log("Received change!") 
-          this.$machineOutput=value;
+          this.$machineOutput=this.$machineOutput+value;
        },
        (error)=>{
           console.log("ERRORE!!")

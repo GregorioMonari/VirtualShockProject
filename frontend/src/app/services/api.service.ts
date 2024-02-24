@@ -41,6 +41,18 @@ export default class APIService {
       );
     }
 
+    executeString(stringProgram:string): Observable<ExecutionApiResponse> {
+      console.log("Executing code...")
+      const rootPath = 'http://localhost:8084/vshapi';
+      const requestBody={source:"direct",value:stringProgram}//"./testProgram.txt"
+      return this.http.post(`${rootPath}/execute`,requestBody).pipe(
+        map((payload: any) => {
+          return payload as ExecutionApiResponse;
+        }),
+        catchError(this.handleError)
+      );
+    }
+
     assemble(rawText:string){
       console.log("Assembling code...")
       const rootPath = 'http://localhost:3005/vshapi';
