@@ -1,21 +1,24 @@
 # VirtualShockProject
 ## Introduction
-This is Virtual Shock, a Virtual CPU implemented with Logisim.
-Virtual shock includes an electron IDE to write and test assembly code.
-A docker backend is available for development purposes.
+VirtualShock project allows to **write, test and run assembly code** in a simple and visual way.
 
-## Components
-- hardware: logisim components, ram and roms
-- frontend: angular ide
-- vm: websocket based virtual machine
-- parser: http based assembly parser
-- release: a complete desktop application, ready to run
+## Modules
+- `hardware`: logisim components, ram and roms
+- `frontend`: angular ide
+- `virtual-machine`: websocket based virtual machine
+- `parser`: http based assembly parser
 
-## VirtualShockAssembler
-
-## Developing
-1. Deploy docker stack
-2. Run angular frontend
+## Quick start for developers
+1. From the root directory, build the backend with docker-compose:  
+`docker-compose build`
+2. Deploy the backend:  
+`docker-compose up`
+3. Cd into the Frontend folder:  
+`cd ./frontend`
+4. Launch Angular frontend:
+`ng serve`
+5. Open a browser and go to url:
+`http://localhost:4200`
 
 ## Issues
 Warning: D:\HomeBase\git\VirtualShockProject\frontend\src\app\components\code-editor\code-editor.component.ts depends on 'ace-builds'. CommonJS or AMD dependencies can cause optimization bailouts.

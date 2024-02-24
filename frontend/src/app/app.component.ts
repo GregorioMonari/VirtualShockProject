@@ -15,9 +15,11 @@ export class AppComponent {
     //wait for tabs to init the editor before loading files
     this.tabs.getIsReady().subscribe((value)=>{
       if(value){
-        const tabId1=this.tabs.addTab("main.js",`nloops equ 5
+        const tabId1=this.tabs.addTab("main.js",`initialValue equ 0
+nloops equ 5
+
 proc main {
-  addi r1,r0,0
+  addi r1,r0,initialValue
   addi r2,r0,nloops
   
   loop: print r1
