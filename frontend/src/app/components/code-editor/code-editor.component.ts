@@ -28,14 +28,5 @@ import TabsService from 'src/app/services/tabs.service';
       this.aceEditor.session.setMode('ace/mode/assembly_vsh');
 
       this.tabs.setEditor(this.aceEditor)
-      /*
-      const tabId1=this.tabs.addTab("main.js","function main(){}","./")
-      this.tabs.setCurrentTab(tabId1);
-
-      const tabId2=this.tabs.addTab("prog.asm","addi r1,r2,r3","./")
-      this.tabs.setCurrentTab(tabId2);
-      */
-
-
     }
   }

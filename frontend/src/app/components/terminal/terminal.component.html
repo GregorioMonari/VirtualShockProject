@@ -1,4 +1,32 @@
-<div class="bg-gray-800 text-white h-48 w-full">
-    <div class="w-full pl-2"># Output</div>
-    <pre class="w-full h-full p-2 overflow-y-scroll">{{$machineOutput}}</pre>
+<div class="bg-gray-900 text-white h-full w-full 
+            flex flex-col overflow-hidden
+            border-t-2"
+>
+    <!--Header del terminale-->
+    <div class="flex justify-between w-full pt-2 pb-1">
+        <div class="flex">
+            <div (click)="setTerminalType('compile')" 
+                [class.underline]="$terminalType=='compile'"
+                class="underline-offset-8 cursor-pointer pl-5"
+            >
+                COMPILE
+            </div>
+            <div (click)="setTerminalType('output')" 
+                [class.underline]="$terminalType=='output'" 
+                class="underline-offset-8 cursor-pointer pl-5"
+            >
+                OUTPUT
+            </div>
+        </div>
+        <!--Buttons-->
+        <div class="flex">
+            <button (click)="clearTerminal()" class="pr-4">r</button>
+            <button class="pr-4">/\</button>
+            <button class="pr-4">x</button>
+        </div>
+    </div>
+    
+    <!--Contenuto del terminale-->
+    <pre *ngIf="$terminalType=='compile'" class="w-full h-full pl-5 mt-2 mb-2 overflow-y-scroll">{{$parserOutput}}</pre>
+    <pre *ngIf="$terminalType=='output'" class="w-full h-full pl-5 mt-2 mb-2 overflow-y-scroll">{{$machineOutput}}</pre>
 </div>

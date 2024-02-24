@@ -1,9 +1,13 @@
 <!--CONTAINER, ACT LIKE ROWS-->
 <div class="bg-cyan-200 flex flex-col h-screen w-screen">
+
+  <!--Header-->
   <div class="bg-slate-400 w-screen">
     <app-header></app-header>
   </div>
-  <!--Horizontal-->
+
+
+  <!--Content (horizontal flex)-->
   <div class="flex h-full w-full">
     <div>
       <app-sidebar></app-sidebar>
@@ -16,14 +20,16 @@
       <div class="flex-grow">
         <app-code-editor></app-code-editor>
       </div>
-      <div>
+      <div class="h-80">
         <app-terminal></app-terminal>
       </div>
     </div>
-  
   </div>
+
+
   <!--Footer-->
   <div>
     <app-footer></app-footer>
   </div>
+  
 </div>

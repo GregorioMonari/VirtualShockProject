@@ -7,3 +7,5 @@
     font-family: 'Montserrat';
     src: url('assets/fonts/Montserrat.ttf');
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
