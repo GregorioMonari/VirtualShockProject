@@ -1,9 +1,8 @@
-# VirtualShockProject
+# ⚡VirtualShockProject
 ![virtualshock](img/VirtualShock.png)
 ## Introduction
 VirtualShock project allows to **write, test and run assembly code** in a simple and visual way.  
 Based on my bachelor's degree thesis: https://amslaurea.unibo.it/25411/  
-
 
 ## Modules
 - `hardware`: logisim components, ram and roms
