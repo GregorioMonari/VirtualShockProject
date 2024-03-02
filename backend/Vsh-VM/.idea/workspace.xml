@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3fc53163-7af4-417e-aa69-d7a361129ebc" name="Changes" comment="" />
+    <list default="true" id="3fc53163-7af4-417e-aa69-d7a361129ebc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../frontend/src/app/components/code-editor/code-editor.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/src/app/components/code-editor/code-editor.component.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -68,7 +70,6 @@
                 <option value="install" />
               </list>
             </option>
-            <option name="multimoduleDir" />
             <option name="pomFileName" value="pom.xml" />
             <option name="profilesMap">
               <map />
