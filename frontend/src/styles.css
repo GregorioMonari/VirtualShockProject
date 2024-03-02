@@ -9,3 +9,45 @@
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+/* TEMP: ACE DIRECTIVES */
+.ace_directive.ace_equ{
+    color:rgb(67, 141, 33);
+}
+
+.ace_directive.ace_db{
+    color:rgb(67, 141, 33);
+}
+
+.ace_function.ace_key{
+    color: rgb(188, 43, 218);
+}
+.ace_function.ace_name{
+    color: rgb(245, 210, 9);
+}
+
+.ace_tag{
+    color: orange;
+}
+
+.ace_instruction.ace_register.ace_cop{
+    color: rgb(218, 16, 16);
+}
+
+.ace_instruction.ace_immediate.ace_cop{
+    color: rgb(21, 224, 224);
+}
+.ace_instruction.ace_immediate.ace_constant{
+    color: rgb(50, 119, 119);
+}
+
+.ace_instruction.ace_jump.ace_cop{
+    color: orange;
+}
+
+/*SPECIAL CASES*/
+.ace_instruction.ace_tag_reference{
+    color: orange;
+}

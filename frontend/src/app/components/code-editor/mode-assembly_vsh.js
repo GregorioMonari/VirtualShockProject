@@ -21,6 +21,12 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
                     caseInsensitive: true 
                 },
                 {
+                    token: "instruction.immediate.constant", // String, Array, or Function: the CSS token to apply
+                    regex: /(.*) (?=(equ|db))/, // String or RegExp: the regexp to match
+                    next:  "start",   // [Optional] String: next state to enter
+                    caseInsensitive: true 
+                },
+                {
                     token: "directive.equ", // String, Array, or Function: the CSS token to apply
                     regex: /equ* /, // String or RegExp: the regexp to match
                     next:  "start",   // [Optional] String: next state to enter
@@ -52,20 +58,8 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
             ],
             "function_body": [
                 {
-                    token: "instruction", // String, Array, or Function: the CSS token to apply
-                    regex: /add* /, // String or RegExp: the regexp to match
-                    next:  "function_body",   // [Optional] String: next state to enter
-                    caseInsensitive: true 
-                },
-                {
-                    token: "instruction.immediate", // String, Array, or Function: the CSS token to apply
-                    regex: /addi* /, // String or RegExp: the regexp to match
-                    next:  "function_body",   // [Optional] String: next state to enter
-                    caseInsensitive: true 
-                },
-                {
-                    token: "instruction.jump", // String, Array, or Function: the CSS token to apply
-                    regex: /j* /, // String or RegExp: the regexp to match
+                    token: "tag", // String, Array, or Function: the CSS token to apply
+                    regex: /([^:\s]+)(?= *:)/, // String or RegExp: the regexp to match
                     next:  "function_body",   // [Optional] String: next state to enter
                     caseInsensitive: true 
                 },
@@ -73,6 +67,94 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
                     token: "function.end", // String, Array, or Function: the CSS token to apply
                     regex: /( *})/, // String or RegExp: the regexp to match
                     next:  "start",   // [Optional] String: next state to enter
+                },
+                //INSTRUCTIONS COP
+                {
+                    token: "instruction.register.cop", // String, Array, or Function: the CSS token to apply
+                    regex: /(add|sub|mult|div|and|or|seq|sneq|sgt|sge|slt|sle)* /, // String or RegExp: the regexp to match
+                    next:  "function_body",   // [Optional] String: next state to enter
+                    caseInsensitive: true 
+                },
+                {
+                    token: "instruction.immediate.cop", // String, Array, or Function: the CSS token to apply
+                    regex: /(addi|subi|multi|divi|andi|ori|seqi|sneqi|sgti|sgei|slti|slei|push|pop)* /, // String or RegExp: the regexp to match
+                    next:  "instruction_immediate_body",   // [Optional] String: next state to enter
+                    caseInsensitive: true 
+                },
+                {
+                    token: "instruction.jump.cop", // String, Array, or Function: the CSS token to apply
+                    regex: /j* /, // String or RegExp: the regexp to match
+                    next:  "jump_tag_reference",   // [Optional] String: next state to enter
+                    caseInsensitive: true 
+                },
+                //SPECIAL INSTRUCTIONS
+                {//HALT
+                    token: "instruction.register.cop", // String, Array, or Function: the CSS token to apply
+                    regex: /(halt|print)/, // String or RegExp: the regexp to match
+                    next:  "function_body",   // [Optional] String: next state to enter
+                    caseInsensitive: true 
+                },
+                {//BEQZ/BNEQZ
+                    token: "instruction.immediate.cop", // String, Array, or Function: the CSS token to apply
+                    regex: /(beqz|bneqz)* /, // String or RegExp: the regexp to match
+                    next:  "instruction_beqz_body",   // [Optional] String: next state to enter
+                    caseInsensitive: true 
+                },
+            ],
+            //IMMEDIATE
+            "instruction_immediate_body": [
+                { 
+                    token: 'constant.character.decimal.assembly',
+                    regex: '\\b[0-9]+\\b',
+                    next:  "function_body",   // [Optional] String: next state to enter
+                    caseInsensitive: true 
+                },
+                { 
+                    token: 'constant.character.hexadecimal.assembly',
+                    regex: '\\b[A-F0-9]+h\\b',
+                    next:  "function_body",   // [Optional] String: next state to enter
+                    caseInsensitive: true 
+                },
+                {
+                    token: "instruction.immediate.register", // String, Array, or Function: the CSS token to apply
+                    regex: /r[0-9]+/, // String or RegExp: the regexp to match
+                    next:  "instruction_immediate_body",   // [Optional] String: next state to enter
+                    caseInsensitive: true 
+                },
+                {
+                    token: "instruction.immediate.constant", // String, Array, or Function: the CSS token to apply
+                    regex: /(?<=( |,))(.*)/, // String or RegExp: the regexp to match
+                    next:  "function_body",   // [Optional] String: next state to enter
+                    caseInsensitive: true 
+                },
+            ],
+            //Beqz
+            "instruction_beqz_body": [
+                {
+                    token: "instruction.beqz.register", // String, Array, or Function: the CSS token to apply
+                    regex: /r[0-9]+/, // String or RegExp: the regexp to match
+                    next:  "jump_tag_reference",   // [Optional] String: next state to enter
+                    caseInsensitive: true 
+                },
+            ],
+            "jump_tag_reference": [
+                { 
+                    token: 'constant.character.decimal.assembly',
+                    regex: '\\b[0-9]+\\b',
+                    next:  "function_body",   // [Optional] String: next state to enter
+                    caseInsensitive: true 
+                },
+                { 
+                    token: 'constant.character.hexadecimal.assembly',
+                    regex: '\\b[A-F0-9]+h\\b',
+                    next:  "function_body",   // [Optional] String: next state to enter
+                    caseInsensitive: true 
+                },
+                {
+                    token: "instruction.tag_reference", // String, Array, or Function: the CSS token to apply
+                    regex: /(?<=( |,))(.*)/, // String or RegExp: the regexp to match
+                    next:  "function_body",   // [Optional] String: next state to enter
+                    caseInsensitive: true 
                 },
             ]
         };
