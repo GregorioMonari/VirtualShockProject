@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AfterViewInit, ElementRef, ViewChild } from "@angular/core"
 
 import * as ace from "ace-builds"
-import 'ace-builds/src-noconflict/mode-assembly_vsh';
+import './mode-assembly_vsh';
 
 import TabsService from 'src/app/services/tabs.service';
 

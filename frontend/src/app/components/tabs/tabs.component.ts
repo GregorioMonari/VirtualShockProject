@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 
-import * as ace from "ace-builds"
-
 interface FileTab{
   isSaved:boolean;
   text:string|null; //null if currFileTab, text is stored into editor
