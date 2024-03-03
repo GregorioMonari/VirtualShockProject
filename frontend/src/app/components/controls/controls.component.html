@@ -1,3 +1,11 @@
-<div>
-    <button (click)="run()">Run/build</button>
+<div class="flex space-x-2 pr-1">
+    <button (click)="compile()">
+        <img class="inverted_color cursor-pointer" src="assets/icons/settings.svg" alt="Compile">
+    </button>
+    <button (click)="run()">
+        <img class="inverted_color cursor-pointer" src="assets/icons/play.svg" alt="Compile&Run">
+    </button>
+    <button (click)="stop()">
+        <img class="inverted_color cursor-pointer" src="assets/icons/square.svg" alt="Stop">
+    </button>
 </div>

@@ -8,7 +8,7 @@ import ParserService from 'src/app/services/parser.service';
     styleUrls: ['./terminal.component.css'],
   })
   export class TerminalComponent {
-    public $terminalType:"compile"|"output"="output"
+    public $terminalType:"compile"|"output"="compile"
     public $machineOutput:string="";
     public $parserOutput:string="";
     constructor(

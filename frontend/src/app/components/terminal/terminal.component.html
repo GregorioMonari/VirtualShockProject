@@ -19,10 +19,16 @@
             </div>
         </div>
         <!--Buttons-->
-        <div class="flex">
-            <button (click)="clearTerminal()" class="pr-4">r</button>
-            <button class="pr-4">/\</button>
-            <button class="pr-4">x</button>
+        <div class="flex space-x-2 pr-2">
+            <button (click)="clearTerminal()">
+                <img class="inverted_color cursor-pointer" src="assets/icons/trash.svg" alt="trash">
+            </button>
+            <button>
+                <img class="inverted_color cursor-pointer" src="assets/icons/nav-arrow-up.svg" alt="trash">
+            </button>
+            <button>
+                <img class="inverted_color cursor-pointer" src="assets/icons/xmark.svg" alt="trash">
+            </button>
         </div>
     </div>
     

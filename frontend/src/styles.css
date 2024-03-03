@@ -11,6 +11,11 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
+/*INVERT ICON COLOR*/
+.inverted_color{
+    filter: invert(100%);
+}
+
 
 /* TEMP: ACE DIRECTIVES */
 .ace_directive.ace_equ{
