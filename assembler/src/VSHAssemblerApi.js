@@ -103,9 +103,4 @@ class VSHAssemblerApi{
     }
 }
 
-
-const api=new VSHAssemblerApi(3005)
-api.listen()
-
-
 module.exports=VSHAssemblerApi;

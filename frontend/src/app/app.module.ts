@@ -12,10 +12,13 @@ import { CodeEditorComponent } from './components/code-editor/code-editor.compon
 import { HeaderComponent } from './components/header/header.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { ControlsComponent } from './components/controls/controls.component';
+import { BurgerMenuComponent } from './components/burger-menu/burger-menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +29,8 @@ import { MatButtonModule } from '@angular/material/button';
     CodeEditorComponent,
     HeaderComponent,
     TabsComponent,
-    ControlsComponent
+    ControlsComponent,
+    BurgerMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +38,8 @@ import { MatButtonModule } from '@angular/material/button';
     HttpClientModule,
     BrowserAnimationsModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

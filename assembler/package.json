@@ -2,9 +2,9 @@
   "name": "assembler",
   "version": "0.0.1",
   "description": "",
-  "main": "VSHAssemblerApi.js",
+  "main": "main.js",
   "scripts": {
-    "start": "node ./src/VSHAssemblerApi",
+    "start": "node ./src/main",
     "test": "jest"
   },
   "author": "Gregorio Monari",

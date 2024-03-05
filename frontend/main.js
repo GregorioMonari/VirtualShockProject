@@ -2,16 +2,16 @@ const {app, BrowserWindow} = require('electron')
 const url = require("url");
 const path = require("path");
 const { create } = require('domain');
-const VshVmApi= require("./electron_modules/VshVmApi")
+const AppModuleManager= require("./app-modules/AppModuleManager.js")
 
 console.log("### VSH Suite - Desktop version v0.0.1 ###")
 
-let mainWindow
+let mainWindow;
 
 function createWindow () {
     mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1920,
+        height: 1080,
         webPreferences: {
             nodeIntegration: true
         }
@@ -23,7 +23,7 @@ function createWindow () {
             slashes: true
         }));
     // Open the DevTools.
-    mainWindow.webContents.openDevTools()
+    // mainWindow.webContents.openDevTools()
 
     mainWindow.on('closed', function () {
         mainWindow = null
@@ -31,7 +31,7 @@ function createWindow () {
 }
 
 app.on('ready', async ()=>{
-    initVMApi();
+    await startBackend();
     createWindow();
 })
 
@@ -46,8 +46,8 @@ app.on('activate', function () {
 
 
 //----- CUSTOM FUNCTIONS -----//
-function initVMApi(){
-    console.log("INITIALIZING VM API")
-    const vshApi=new VshVmApi(3000);
-    vshApi.start();   
+async function startBackend(){
+    const mainDirName= __dirname;
+    const appModuleManager = new AppModuleManager(mainDirName)
+    await appModuleManager.start();
 }
