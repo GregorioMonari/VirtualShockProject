@@ -1,8 +1,14 @@
 # ⚡VirtualShockProject
-![virtualshock](docs/VirtualShock.png)
+![virtualshock](resources/docs/VirtualShock.png)
+
 ## Introduction
 VirtualShock project allows to **write, test and run assembly code** in a simple and visual way.  
 Based on my bachelor's degree thesis: https://amslaurea.unibo.it/25411/  
+
+## Installation
+1. **Download the latest release** at: https://github.com/GregorioMonari/VirtualShockProject/releases
+2. Unzip
+3. Click `electron.exe` to launch the application
 
 ## Modules
 - `hardware`: logisim components, ram and roms
