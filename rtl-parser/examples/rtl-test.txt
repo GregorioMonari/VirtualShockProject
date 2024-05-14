@@ -1,0 +1,43 @@
+# 
+# VirtualShock RTL V1.0
+# By Gregorio Monari
+# Based on Hennessey and Patterson dlx
+# 
+
+#---IF/DECODE---
+ir<-m[pc] #if phase
+a<-rs1,b<-rs2,pc<-pc+1 #decode phase
+
+#---RTL Instructions---
+#ALU type instructions
+@add:r
+c<-a+b
+rd<-c
+@sub:r
+c<-a-b
+rd<-c
+#to add: and, xor, or, mult, ...
+@addi:i
+c<-a+cost
+rd<-c
+@subi:i
+c<-a-cost
+rd<-c
+#to add: andi, xori, ori, multi, ...
+
+#Memory type instructions 
+@store:i
+mar<-a+cost
+mdr<-b
+m[mar]<-mdr
+@load:i
+mar<-a+cost
+mdr<-m[mar]
+c<-mdr
+rd<-c
+
+#Jump instructions
+@jr:r
+pc<-a
+@j:j
+pc<-pc+cost

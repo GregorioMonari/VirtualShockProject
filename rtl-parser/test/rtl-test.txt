@@ -1,4 +1,0 @@
-ir<-m[pc]
-a<-rs1,b<-rs2,pc<-pc+1
-c<-a+b
-rd<-c
