@@ -24,6 +24,7 @@ export default class ParserService {
                 const machineCode= res.out as string;
                 this.machineCode.next(machineCode);
                 this.parserOutput.next("Success, generated "+machineCode.length+" bytes\n");
+                this.parserOutput.next(this.formatMachineCodeToLogisimMemoryFile(machineCode));
                 // Code to measure performance
                 const endTime = performance.now();
                 const executionTime = endTime - startTime;
@@ -43,6 +44,82 @@ export default class ParserService {
         return this.machineCode.asObservable()
     }
 
+    formatMachineCodeToLogisimMemoryFile(machineCode: string){
+        const lines=machineCode.split("\n");
+        let out="v2.0 raw\n";
+        for(const line of lines){
+            out=out+this.getAsHexString(line.slice(2))+"\n"
+        }
+        return out;
+    }
 
+    getAsHexString(javaBinaryString:string){
+        //console.log(this._controlBits)
+        var out=""
+        var currWord="";
+        var blockCount=0;
+        for(var i=0; i<javaBinaryString.length;i++){
+            const bit= javaBinaryString.charAt(i)    
+            currWord=currWord+bit;
+            blockCount++ 
+            if(blockCount>3){
+                switch (currWord) {
+                    case "0000":
+                        out=out+"0"
+                        break;
+                    case "0001":
+                        out=out+"1"
+                        break;   
+                    case "0010":
+                        out=out+"2"
+                        break;     
+                    case "0011":
+                        out=out+"3"
+                        break;    
+                    case "0100":
+                        out=out+"4"
+                        break;    
+                    case "0101":
+                        out=out+"5"
+                        break;    
+                    case "0110":
+                        out=out+"6"
+                        break;    
+                    case "0111":
+                        out=out+"7"
+                        break;    
+                    case "1000":
+                        out=out+"8"
+                        break;    
+                    case "1001":
+                        out=out+"9"
+                        break;    
+                    case "1010":
+                        out=out+"a"
+                        break;   
+                    case "1011":
+                        out=out+"b"
+                        break;    
+                    case "1100":
+                        out=out+"c"
+                        break;    
+                    case "1101":
+                        out=out+"d"
+                        break;    
+                    case "1110":
+                        out=out+"e"
+                        break;    
+                    case "1111":
+                        out=out+"f"
+                        break; 
+                    default:
+                        break;
+                }
+                currWord="";
+                blockCount=0;
+            }
+        }
+        return out;
+    }
 
 }
