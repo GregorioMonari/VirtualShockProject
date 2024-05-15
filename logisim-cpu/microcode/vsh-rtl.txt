@@ -1,5 +1,5 @@
 # 
-# VirtualShock RTL V1.0
+# VirtualShock RTL V0.3.2
 # By Gregorio Monari
 # Based on Hennessey and Patterson dlx
 # 
