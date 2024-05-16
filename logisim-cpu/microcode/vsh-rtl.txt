@@ -26,11 +26,11 @@ rs2<-c
 #to add: andi, xori, ori, multi, ...
 
 #Memory type instructions 
-@store:i
+@sw:i
 mar<-a+cost
 mdr<-b
 m[mar]<-mdr
-@load:i
+@lw:i
 mar<-a+cost
 mdr<-m[mar]
 c<-mdr

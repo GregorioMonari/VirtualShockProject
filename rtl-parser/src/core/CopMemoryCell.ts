@@ -1,8 +1,18 @@
 export default class CopMemoryCell{
+    private _copName: string;
     private _cellBits: number[];
     
     constructor(){
         this._cellBits= Array(16).fill(0)
+        this._copName="";
+    }
+
+    setCopName(name:string){
+        this._copName=name;
+    }
+
+    getCopName(){
+        return this._copName;
     }
 
     setInstructionType(type: 'r'|'i'|'j'){

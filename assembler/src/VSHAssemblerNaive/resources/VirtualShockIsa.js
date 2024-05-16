@@ -27,6 +27,10 @@ __JSON_ISA_PUBLIC__={
             "type":"immediate",
             "copBytes":"001010"
         },
+        "subi":{
+            "type":"immediate",
+            "copBytes":"001011"
+        },
 
 
 
@@ -42,6 +46,10 @@ __JSON_ISA_PUBLIC__={
         },
 
 
+        "jr":{
+            "type":"register",
+            "copBytes":"010011"
+        },
         "j":{
             "type":"jump",
             "copBytes":"010100",
