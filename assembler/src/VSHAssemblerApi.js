@@ -41,13 +41,15 @@ class VSHAssemblerApi{
         this.app.post('/vshapi/assemble', (req, res) => {
 
             if(req.body.hasOwnProperty("value")){
-                const rawText=req.body.value;
-
-                console.log("Raw text in:",rawText)
-                const out=this.assemble(rawText);
-                console.log("Machine code:",out)
-    
-                res.send({"out":out})
+                try{
+                    const rawText=req.body.value;
+                    console.log("Raw text in:",rawText)
+                    const out=this.assemble(rawText);
+                    console.log("Machine code:",out)
+                    res.send({"out":out})
+                }catch(e){
+                    res.status(400).send({error:"assembler encountered an error while parsing file"})
+                }
             }else{
                 res.status(403).send({error:"missing value field"})
             }

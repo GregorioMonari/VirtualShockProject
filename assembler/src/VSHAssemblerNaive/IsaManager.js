@@ -14,6 +14,7 @@ const JumpInstruction=require("./core/JumpInstruction")
 module.exports=class IsaManager{
     constructor(){
         this.log=new GregLogs()
+        this.log.loglevel=0;
         var isaLoader=new IsaLoader()
         const ISA_DATA=isaLoader.getIsaData();
         this.isaDB={};

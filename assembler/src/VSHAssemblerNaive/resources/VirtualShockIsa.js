@@ -86,6 +86,16 @@ __JSON_ISA_PUBLIC__={
             "fields":["rs2","r30","0"]
         },
 
+        "out":{
+            "type":"immediate",
+            "copBytes":"101010",
+            "fields":["cost(rs1)","rs2"]
+        },
+        "in":{
+            "type":"immediate",
+            "copBytes":"101011",
+            "fields":["rs2","cost(rs1)"]
+        },
 
         "print":{
             "type":"register",

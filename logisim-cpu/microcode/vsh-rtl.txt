@@ -25,19 +25,52 @@ c<-a-cost
 rs2<-c
 #to add: andi, xori, ori, multi, ...
 
+
 #Memory type instructions 
 @sw:i
 mar<-a+cost
 mdr<-b
 m[mar]<-mdr
+
 @lw:i
 mar<-a+cost
 mdr<-m[mar]
 c<-mdr
 rs2<-c
 
+
 #Jump instructions
 @jr:r
 pc<-a
+
 @j:j
 pc<-pc+cost
+
+
+#Branch
+@beqz:i
+a==0?
+pc<-pc+cost
+
+@bneqz:i
+a!=0?
+pc<-pc+cost
+
+
+#Set condition
+@seq:r
+c<-a==b
+rd<-c
+
+
+#I/O
+@in:i
+mar<-a+cost #nelle slide usa b, io metto a perchè per b ho già rs2 modificato
+mdr<-io[mar]
+c<-mdr
+rs2<-c
+
+@out:i
+mar<-a+cost
+mdr<-b
+io[mar]<-mdr

@@ -29,6 +29,11 @@ export default class StatementMapper{
         }
 
         //Check if it has branch condition
+        if(this.isBranchOperation(statement)){
+            console.log("** mapping branch operation: "+statement)
+            this.mapBranchOperation(statement,cell);
+            return;
+        }
 
         //Else, proceed with standard flow
         console.log("** mapping micro operation: "+statement)
@@ -145,6 +150,35 @@ export default class StatementMapper{
     }
 
 
+    //---Manage branch microoperations---
+    private mapBranchOperation(statement:string,cell:MicroCodeCell){
+        if(statement.includes("==")){
+            //beqz
+            cell.setControlBit(this.map.udc.branch_enable)
+            //Set output enable
+            const reg2compare= statement.split("==")[0].trim();
+            cell.setControlBit(this.map.registers[reg2compare].oe1)
+            //Set alu op= x
+            cell.setManyControlBits(this.map.alu.x)
+        }else{
+            //bneqz
+            cell.setControlBit(this.map.udc.branch_enable)
+            cell.setControlBit(this.map.udc.bneqz)
+            //set output enable
+            const reg2compare= statement.split("!=")[0].trim();
+            cell.setControlBit(this.map.registers[reg2compare].oe1)
+            //Set alu op=x
+            cell.setManyControlBits(this.map.alu.x)
+        }
+    }
+
+    private isBranchOperation(statement:string){
+        //es. a==0?
+        const myRegex: RegExp = /(.*)( *)(==|!=)( *)(0)( *)(\?)/;
+        return myRegex.test(statement)
+    }
+
+
     //---Manage Memory microoperations---
     private mapMemoryOperation(statement:string, cell:MicroCodeCell){
         const {destination,source}= this.getSourceAndDest(statement)
@@ -152,8 +186,13 @@ export default class StatementMapper{
         console.log("source: "+source)
         //Detect if it is read or write and if it is mem or i/o
         const isRead= this.isReadMemOperation(destination,source);
-        const wrEnable= "memwr";
-        const rdEnable= "memrd";
+        const isIO= this.isIoOperation(statement)
+        let wrEnable= "memwr";
+        let rdEnable= "memrd";
+        if(isIO){
+            wrEnable= "iowr";
+            rdEnable= "iord";
+        }
 
         //Manage the memory member
         let memReg=this.getMemOperationRegister(isRead?source:destination);
@@ -161,7 +200,11 @@ export default class StatementMapper{
         //mi: 0=mar, 1=pc (per emettere ind da pc invece che da mar: 1)
         console.log(`memory read operation`)
         if(memReg&&(memReg=="pc"||memReg=="mar")){
-            cell.setControlBit(this.map.registers[memReg].oe2); //oe2 pc o mar
+            if(memReg=="pc"){
+                cell.setControlBit(this.map.registers.pc.oe2); //oe2 pc
+            }else{
+                cell.setControlBit(this.map.registers.mar.oe1); //oe1 mar
+            }
             cell.setControlBit(
                 isRead? this.map.memory[rdEnable]:
                     this.map.memory[wrEnable]
@@ -202,11 +245,17 @@ export default class StatementMapper{
         return myRegex.test(statement)
     }
 
+    private isIoOperation(statement:string): boolean{
+        const myRegex: RegExp = /(io|i\/o)(\[(.*?)\])/;
+        return myRegex.test(statement)
+    }
+
     private getMemOperationRegister(member:string){
-        const myRegex: RegExp = /m\[(.*?)\]/;
+        const myRegex: RegExp = /(m|io|i\/o)\[(.*?)\]/;
         const match = member.match(myRegex);
-        if (match && match[1]) {
-            return match[1];
+        //console.log(match)
+        if (match && match[2]) {
+            return match[2];
             //console.log("String contains content within square brackets:", contentInsideBrackets);
         } else return null;
     }
