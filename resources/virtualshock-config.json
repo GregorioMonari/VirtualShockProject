@@ -1,9 +1,11 @@
 {
     "version": "0.3.2",
-    "name":"virtualshock-isa",
-    "description": "Instruction Set Architecture and rtl mapping for VirtualShock DLX",
-    "author": "Gregorio Monari",
-    "data":{
+    "name":"virtualshock-configuration-file",
+    "description": "Configure ISA and RTL mapping",
+    "options":{
+        "word":"32"
+    },
+    "isa":{
         "add":{
             "type":"register",
             "copBytes":"000000"
@@ -75,14 +77,43 @@
         "push":{
             "type":"immediate",
             "copBytes":"101000",
-            "fields":["rs2","r30","0"]
+            "fields":["r30","rs1","0"]
         },
         "pop":{
             "type":"immediate",
             "copBytes":"101001",
-            "fields":["rs2","r30","0"]
+            "fields":["r30","rs1","0"]
         },
 
+
+        "call":{
+            "type":"immediate",
+            "copBytes":"101010",
+            "fields":["r30","r0","cost"]
+        },
+        "callr":{
+            "type":"immediate",
+            "copBytes":"101011",
+            "fields":["r30","rs1","0"]
+        },
+        "ret":{
+            "type":"immediate",
+            "copBytes":"101100",
+            "fields":["r30","r0","0"]
+        },
+
+
+
+        "out":{
+            "type":"immediate",
+            "copBytes":"101101",
+            "fields":["cost(rs1)","rs2"]
+        },
+        "in":{
+            "type":"immediate",
+            "copBytes":"101110",
+            "fields":["rs2","cost(rs1)"]
+        },
 
         "print":{
             "type":"register",
@@ -95,11 +126,21 @@
             "fields":["r0","r0","r0"]
         }
     },
-    "rtl":{
+    "rtl-map": {
         "alu": {
             "+": [4],
             "-": [4,3,0],
-            "+1": [4,3,1]
+            "+1": [4,3,1],
+            "-1": [4,1,0],
+            "x": [4,1],
+            "y": [4,2],
+    
+            ">": [42, 4,3,0],
+            "<=": [43, 4,3,0],
+            ">=": [43,42, 4,3,0],
+            "==": [44, 4,3,0],
+            "!=": [44,42, 4,3,0],
+            "<": [44,43, 4,3,0]
     
         },
         "registers": {
@@ -121,13 +162,18 @@
             "wr": 39,
             "rd2": 40,
             "rd1": 41,
-            "rs2_as_dest": 50
+            "rs2_as_dest": 50,
+            "rs1_as_dest": 51
         },
         "memory":{
             "memrd": 34,
             "memwr": 35,
             "iord": 36,
             "iowr": 37
+        },
+        "udc":{
+            "branch_enable": 46,
+            "bneqz": 47
         }
     }
 }

@@ -11,8 +11,8 @@ module.exports=class VshAssembler{
         this.isaManager= new IsaManager();
         this.wordSize=1 //bytes
         var mainFirstAddress="0000h"
-        var variablesFirstAddress="0010h"
-        var proceduresFirstAddress="0fffh"
+        var variablesFirstAddress="0400h"
+        var proceduresFirstAddress="0010h"
         this.codeSlicer= new CodeSlicer(this.wordSize,mainFirstAddress,variablesFirstAddress,proceduresFirstAddress);
         this.nc= new NumberConversionManager()
         this.log.info("==========================================")

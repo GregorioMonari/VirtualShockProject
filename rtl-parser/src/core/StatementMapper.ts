@@ -68,6 +68,10 @@ export default class StatementMapper{
                 cell.setManyControlBits(this.map.alu["+1"])
                 return;
             }
+            if(operation=="-"&&op2=="1"){
+                cell.setManyControlBits(this.map.alu["-1"])
+                return;
+            }
             //second member
             this.mapSingleMember(op2,"oe2",cell)
             //operation
@@ -128,8 +132,13 @@ export default class StatementMapper{
         }
 
         //Register file
-        if(type!="wr" && member=="rs1"){
-            cell.setControlBit(this.map.datapath.rd1);
+        if(member=="rs1"){
+            if(type=="wr"){
+                cell.setControlBit(this.map.datapath.wr)
+                cell.setControlBit(this.map.datapath.rs1_as_dest)
+            }else{
+                cell.setControlBit(this.map.datapath.rd1);
+            }
             return;
         }
         if(member=="rs2"){

@@ -34,7 +34,8 @@
         "wr": 39,
         "rd2": 40,
         "rd1": 41,
-        "rs2_as_dest": 50
+        "rs2_as_dest": 50,
+        "rs1_as_dest": 51
     },
     "memory":{
         "memrd": 34,

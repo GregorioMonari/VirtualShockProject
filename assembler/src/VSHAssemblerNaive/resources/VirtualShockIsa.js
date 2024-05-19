@@ -78,22 +78,41 @@ __JSON_ISA_PUBLIC__={
         "push":{
             "type":"immediate",
             "copBytes":"101000",
-            "fields":["rs2","r30","0"]
+            "fields":["r30","rs1","0"]
         },
         "pop":{
             "type":"immediate",
             "copBytes":"101001",
-            "fields":["rs2","r30","0"]
+            "fields":["r30","rs1","0"]
         },
+
+
+        "call":{
+            "type":"immediate",
+            "copBytes":"101010",
+            "fields":["r30","r0","cost"]
+        },
+        "callr":{
+            "type":"immediate",
+            "copBytes":"101011",
+            "fields":["r30","rs1","0"]
+        },
+        "ret":{
+            "type":"immediate",
+            "copBytes":"101100",
+            "fields":["r30","r0","0"]
+        },
+
+
 
         "out":{
             "type":"immediate",
-            "copBytes":"101010",
+            "copBytes":"101101",
             "fields":["cost(rs1)","rs2"]
         },
         "in":{
             "type":"immediate",
-            "copBytes":"101011",
+            "copBytes":"101110",
             "fields":["rs2","cost(rs1)"]
         },
 

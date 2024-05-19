@@ -48,7 +48,7 @@
     <tool lib="8" name="Text Tool"/>
     <sep/>
     <tool lib="0" name="Pin">
-      <a name="facing" val="west"/>
+      <a name="facing" val="north"/>
     </tool>
     <tool lib="0" name="Pin">
       <a name="facing" val="west"/>
@@ -611,7 +611,8 @@
       <a name="appearance" val="classic"/>
       <a name="contents">addr/data: 6 16
 21 41 8*0 4061 4081 7*0 110 40a2
-40d3 4*0 4131 4151 171 13*0 41d2 4193
+40d3 4*0 4131 4151 171 11*0 4192 41c4
+4213 4253 4293 4312 42d3
 </a>
       <a name="dataWidth" val="16"/>
     </comp>
@@ -630,7 +631,10 @@
 2000440010000 3000000c13a c50 8000001000 c59 8000001000 4000000850 4008000001000
 4000000859 4008000001000 4000800050 4000200 811000000 4000800050 425000000 8000800
 4008000001000 4040 400000c010 400000000052 400000c010 c00000000052 400000c010 100000000c59
-8000001000 4000800050 1025000000 8000800 4008000001000 4000800050 4000200 2011000000
+8000001000 800a13 4008004001040 811000000 800200 425000000 a1a 4008008001800
+8008000001000 4008000 400000c010 800a13 4008811001000 4008000 4040 800a13
+4008811001000 800200 425000000 a1a 4008008005000 4000800050 1025000000 8000800
+4008000001000 4000800050 4000200 2011000000
 </a>
       <a name="dataWidth" val="64"/>
       <a name="labelvisible" val="true"/>
@@ -663,6 +667,7 @@
     <comp loc="(690,460)" name="counter_control"/>
     <comp loc="(810,720)" name="instruction_registers_manager"/>
     <comp loc="(920,100)" name="branch_control"/>
+    <wire from="(1080,630)" to="(1080,800)"/>
     <wire from="(1090,630)" to="(1090,790)"/>
     <wire from="(1100,630)" to="(1100,640)"/>
     <wire from="(1100,710)" to="(1100,800)"/>
@@ -768,6 +773,7 @@
     <wire from="(810,750)" to="(1200,750)"/>
     <wire from="(810,780)" to="(1140,780)"/>
     <wire from="(810,790)" to="(1090,790)"/>
+    <wire from="(810,800)" to="(1080,800)"/>
     <wire from="(840,390)" to="(840,410)"/>
     <wire from="(850,490)" to="(850,510)"/>
     <wire from="(870,390)" to="(870,420)"/>
@@ -1142,6 +1148,7 @@
       <text dominant-baseline="central" font-family="SansSerif" font-size="12" text-anchor="middle" x="433" y="108">unsigned_cost</text>
       <text dominant-baseline="central" font-family="SansSerif" font-size="12" text-anchor="middle" x="427" y="118">rs2_as_dest</text>
       <text dominant-baseline="central" font-family="SansSerif" font-size="12" text-anchor="middle" x="279" y="89">Istruction type manager (R,I,J)</text>
+      <text dominant-baseline="central" font-family="SansSerif" font-size="12" text-anchor="middle" x="427" y="128">rs1_as_dest</text>
       <circ-anchor facing="east" x="390" y="50"/>
       <circ-port dir="in" pin="160,40" x="390" y="60"/>
       <circ-port dir="in" pin="160,60" x="390" y="70"/>
@@ -1150,6 +1157,7 @@
       <circ-port dir="in" pin="250,320" x="170" y="90"/>
       <circ-port dir="in" pin="590,540" x="390" y="110"/>
       <circ-port dir="in" pin="810,710" x="390" y="120"/>
+      <circ-port dir="in" pin="810,840" x="390" y="130"/>
       <circ-port dir="out" pin="1030,350" x="360" y="130"/>
       <circ-port dir="out" pin="1030,390" x="310" y="130"/>
       <circ-port dir="out" pin="1030,430" x="260" y="130"/>
@@ -1314,6 +1322,11 @@
       <a name="facing" val="north"/>
       <a name="label" val="rs2_as_dest"/>
     </comp>
+    <comp lib="0" loc="(810,840)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="facing" val="north"/>
+      <a name="label" val="rs1_as_dest"/>
+    </comp>
     <comp lib="1" loc="(510,190)" name="AND Gate">
       <a name="facing" val="south"/>
       <a name="size" val="30"/>
@@ -1363,6 +1376,9 @@
       <a name="size" val="30"/>
     </comp>
     <comp lib="1" loc="(820,700)" name="Controlled Buffer">
+      <a name="width" val="5"/>
+    </comp>
+    <comp lib="1" loc="(820,810)" name="Controlled Buffer">
       <a name="width" val="5"/>
     </comp>
     <comp lib="2" loc="(190,490)" name="Decoder">
@@ -1460,7 +1476,9 @@
     <wire from="(600,400)" to="(930,400)"/>
     <wire from="(610,580)" to="(650,580)"/>
     <wire from="(610,620)" to="(610,640)"/>
+    <wire from="(610,640)" to="(610,810)"/>
     <wire from="(610,640)" to="(690,640)"/>
+    <wire from="(610,810)" to="(800,810)"/>
     <wire from="(660,520)" to="(660,570)"/>
     <wire from="(660,520)" to="(690,520)"/>
     <wire from="(670,580)" to="(930,580)"/>
@@ -1479,7 +1497,9 @@
     <wire from="(760,560)" to="(760,630)"/>
     <wire from="(770,40)" to="(1100,40)"/>
     <wire from="(770,40)" to="(770,530)"/>
+    <wire from="(810,820)" to="(810,840)"/>
     <wire from="(820,700)" to="(950,700)"/>
+    <wire from="(820,810)" to="(950,810)"/>
     <wire from="(930,160)" to="(930,350)"/>
     <wire from="(930,350)" to="(1030,350)"/>
     <wire from="(930,350)" to="(930,400)"/>
@@ -1489,7 +1509,8 @@
     <wire from="(950,210)" to="(950,390)"/>
     <wire from="(950,390)" to="(1030,390)"/>
     <wire from="(950,390)" to="(950,700)"/>
-    <wire from="(950,700)" to="(950,730)"/>
+    <wire from="(950,700)" to="(950,810)"/>
+    <wire from="(950,810)" to="(950,860)"/>
     <wire from="(970,160)" to="(970,240)"/>
     <wire from="(970,240)" to="(970,430)"/>
     <wire from="(970,430)" to="(1030,430)"/>

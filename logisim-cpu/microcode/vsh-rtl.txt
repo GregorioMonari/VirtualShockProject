@@ -63,6 +63,40 @@ c<-a==b
 rd<-c
 
 
+#Stack
+@push:i
+mar<-b-1,c<-b-1 #aggiorna stack pointer (sp)
+mdr<-a,rs2<-c
+m[mar]<-mdr
+
+@pop:i
+mar<-b
+mdr<-m[mar] #separa bus quando fai op in memoria per fare alu in parallelo
+c<-b+1 #aggiorna sp
+rs2<-c,c<-mdr
+rs1<-c
+
+
+#Procedures
+@call:i
+mdr<-pc
+pc<-pc+cost
+c<-b-1,mar<-b-1 #aggiorna sp
+rs2<-c,m[mar]<-mdr
+
+@callr:i
+mdr<-pc
+pc<-a
+c<-b-1,mar<-b-1 #aggiorna sp
+rs2<-c,m[mar]<-mdr
+
+@ret:i
+mar<-b
+mdr<-m[mar]
+c<-b+1 #aggiorna sp
+rs2<-c,pc<-mdr
+
+
 #I/O
 @in:i
 mar<-a+cost #nelle slide usa b, io metto a perchè per b ho già rs2 modificato
