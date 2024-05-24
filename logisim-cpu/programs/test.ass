@@ -1,0 +1,59 @@
+#pic addresses
+ICW1 equ 100h
+ICW2 equ 101h
+ICW4 equ 101h
+OCW1 equ 101h
+OCW2 equ 100h
+#pic command words
+RESET equ 13h
+ADDRESS equ 00h
+EN_AEOI equ 1h
+MASK equ 00h
+EOI equ 20h
+#stack
+stackPointer equ 0800h
+#peripherals
+leds equ 200h
+#variables
+flag db 1
+
+#Run once on machine startup
+procedure main{
+    cli
+    #1. load stack pointer into r30
+    addi r30,r0,stackPointer 
+    #2. init pic
+    addi r1,r0,RESET
+    out ICW1(r0),r1
+    addi r1,r0,ADDRESS
+    out ICW2(r0),r1
+    addi r1,r0,EN_AEOI
+    out ICW4(r0),r1 
+    sti #address 08h
+
+    #wait for interrupt
+    wait: lw r1, flag(r0) #address 09h
+    beqz r1,wait #address 0ah (10)
+    out leds(r0),r0 #turn off leds after interrupt received
+}
+
+
+#---Procedures---
+#Turn on led-0 of peripheral 373
+procedure led_on{
+    push r1
+    addi r1,r0,1
+    out leds(r0),r1
+    pop r1
+    ret
+}
+
+
+#---Interrupt routines---
+interrupt_routine test_0{
+    push r1
+    call led_on
+    sw flag(r0),r1
+    pop r1
+    rfe
+}

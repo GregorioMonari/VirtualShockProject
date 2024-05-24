@@ -7,6 +7,21 @@
 #---IF/DECODE---
 ir<-m[pc] #if phase
 a<-rs1,b<-rs2,pc<-pc+1 #decode phase
+# Interrupts no vectorization
+#iar<-pc
+#pc<-0,ien<-0
+# Interrupts with vectorization and nesting
+#nesting
+a<-r30 #addr 2
+mar<-a-1,c<-a-1
+mdr<-pc,r30<-c
+m[mar]<-mdr
+#vectorization
+mdr<-n
+mar<-mdr
+mdr<-m[mar]
+pc<-mdr,ien<-0 #addr 9 -> cc 7
+
 
 #---RTL Instructions---
 #ALU type instructions
@@ -108,3 +123,17 @@ rs2<-c
 mar<-a+cost
 mdr<-b
 io[mar]<-mdr
+
+
+#Interrupt
+@sti:r
+ien<-1
+@cli:r
+ien<-0
+#@rfe_nointerrupt:r #no vectorization or nesting
+#pc<-iar,ien<-1
+@rfe:r
+mar<-a
+mdr<-m[mar]
+c<-a+1
+rs1<-c,pc<-mdr,ien<-1

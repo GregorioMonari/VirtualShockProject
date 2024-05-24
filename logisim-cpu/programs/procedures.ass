@@ -1,0 +1,37 @@
+stackPointer equ 0800h
+ciao equ 10
+a db 1
+leds equ 100h
+
+#Run once on machine startup
+procedure main{
+    call init
+    j forward
+    addi r1,r0,2
+    forward: addi r1,r0,ciao
+    sw a(r0),r1 
+}
+
+
+#---Procedures---
+#Inits the machine registers and peripherals
+procedure init{
+    addi r30,r0,stackPointer #load stack pointer into r30
+    ret
+}
+
+#Turn on led-0 of peripheral 373
+procedure led_on{
+    push r1
+    addi r1,r0,1
+    out leds(r0),r1
+    pop r1
+    ret
+}
+
+
+#---Interrupt routines---
+interrupt_routine test_0{
+    call led_on
+    rfe
+}

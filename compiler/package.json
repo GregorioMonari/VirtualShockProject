@@ -1,0 +1,19 @@
+{
+  "name": "vsh-compiler",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./build/main.js",
+  "scripts": {
+    "start": "node ./build/main",
+    "build": "tsc",
+    "dev:build": "tsc -w",
+    "dev:run": "nodemon build/main",
+    "start:dev": "concurrently npm:dev:*"
+  },
+  "author": "Gregorio Monari",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.12.7"
+  },
+  "dependencies": {}
+}

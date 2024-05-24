@@ -13,8 +13,12 @@ Based on my bachelor's degree thesis: https://amslaurea.unibo.it/25411/
 ## Modules
 - `hardware`: logisim components, ram and roms
 - `frontend`: angular ide
-- `virtual-machine`: websocket based virtual machine
-- `parser`: http based assembly parser
+- `virtual-machine`: java based virtual machine
+- `compiler`: node based assembly and rtl parser
+
+The compiler allows to perform 2 tasks:
+1. Parse rtl code to machinecode
+2. Parse assembly code to machinecode
 
 ## Quick start for developers
 1. From the root directory, build the backend with docker-compose:  
