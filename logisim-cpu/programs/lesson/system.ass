@@ -38,11 +38,11 @@ procedure main{
     out ICW2(r0),r1
     addi r1,r0,EN_AEOI
     out ICW4(r0),r1 
-    sti //address 08h
+    sti
 
     //wait for interrupt
     wait: lw r1, flag(r0) //address 09h
-    beqz r1,wait //address 0ah (10)
+    beqz r1,wait
     
     //Handle input char
     sw flag(r0),r0 //reset flag
