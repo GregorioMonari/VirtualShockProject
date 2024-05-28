@@ -34,7 +34,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: rgb(154, 15, 145);
 }
 .ace_function.ace_name{
-    color: rgb(245, 210, 9);
+    color: rgb(220, 190, 17);
 }
 
 .ace_tag{
@@ -75,4 +75,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /*SPECIAL CASES*/
 .ace_instruction.ace_tag_reference{
     color: orange;
+}
+
+.ace_instruction.ace_call.ace_constant{
+    color: rgb(220, 190, 17);
 }

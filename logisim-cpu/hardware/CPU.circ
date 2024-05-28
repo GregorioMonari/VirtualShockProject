@@ -14,7 +14,7 @@
       <a name="facing" val="south"/>
     </tool>
     <tool name="Tunnel">
-      <a name="facing" val="north"/>
+      <a name="facing" val="east"/>
     </tool>
     <tool name="Clock">
       <a name="facing" val="south"/>
@@ -49,9 +49,9 @@
   <lib desc="#BFH-Praktika" name="9"/>
   <lib desc="#Input/Output-Extra" name="10"/>
   <lib desc="#Soc" name="11"/>
-  <lib desc="file#Udc.circ" name="12"/>
-  <lib desc="file#DataPath.circ" name="13"/>
-  <lib desc="file#core\PIC.circ" name="14"/>
+  <lib desc="file#DataPath.circ" name="12"/>
+  <lib desc="file#core\PIC.circ" name="13"/>
+  <lib desc="file#Udc.circ" name="14"/>
   <main name="cpu_main"/>
   <options>
     <a name="gateUndefined" val="ignore"/>
@@ -245,7 +245,7 @@
       <a name="facing" val="east"/>
       <a name="label" val="ck"/>
     </comp>
-    <comp lib="14" loc="(570,520)" name="pic_main">
+    <comp lib="13" loc="(570,520)" name="pic_main">
       <a name="labelvisible" val="false"/>
     </comp>
     <comp lib="4" loc="(70,330)" name="ROM">
@@ -798,8 +798,8 @@ b8010500 50010401 28010001 50010400 28010020 b4010100 a43e0000 c7c00000
     <comp lib="1" loc="(720,760)" name="OR Gate">
       <a name="size" val="30"/>
     </comp>
-    <comp lib="12" loc="(430,200)" name="udc_main"/>
-    <comp lib="13" loc="(860,150)" name="dp_main"/>
+    <comp lib="12" loc="(860,150)" name="dp_main"/>
+    <comp lib="14" loc="(430,200)" name="udc_main"/>
     <comp lib="2" loc="(840,430)" name="Multiplexer">
       <a name="facing" val="north"/>
       <a name="selloc" val="tr"/>
@@ -1357,13 +1357,13 @@ b8010500 50010401 28010001 50010400 28010020 b4010100 a43e0000 c7c00000
     </comp>
     <comp lib="0" loc="(570,390)" name="Pin">
       <a name="appearance" val="NewPins"/>
-      <a name="label" val="ck"/>
-    </comp>
-    <comp lib="0" loc="(570,390)" name="Pin">
-      <a name="appearance" val="NewPins"/>
       <a name="facing" val="west"/>
       <a name="label" val="ram_ck"/>
       <a name="output" val="true"/>
+    </comp>
+    <comp lib="0" loc="(570,390)" name="Pin">
+      <a name="appearance" val="NewPins"/>
+      <a name="label" val="ck"/>
     </comp>
     <comp lib="0" loc="(570,410)" name="Pin">
       <a name="appearance" val="NewPins"/>

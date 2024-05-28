@@ -110,6 +110,11 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
                     regex: /(sw|lw|out|in)/,
                     next: "instruction_memory_body"
                 },
+                {
+                    token: "instruction.call.cop",
+                    regex: /(call)/,
+                    next: "instruction_call_constant"
+                },
 
                 //SPECIAL INSTRUCTIONS
                 {//HALT
@@ -124,6 +129,13 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
                     next:  "instruction_beqz_body",   // [Optional] String: next state to enter
                     caseInsensitive: true 
                 },
+            ],
+            "instruction_call_constant": [
+                {
+                    token: "instruction.call.constant",
+                    regex: /(?<=( ))([A-Za-z0-9_]+)/,
+                    next: "function_body"
+                }
             ],
             "instruction_memory_body": [
                 {

@@ -14,7 +14,7 @@ procedure main{
     
     addi r1,r0,2h
     loop: subi r1,r1,1
-    out LEDS(r0),r1
+    out LEDS(r0),r1 //output counter value to leds arr
     bneqz r1,loop
     
     call status_led_green
