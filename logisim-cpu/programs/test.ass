@@ -10,7 +10,7 @@ ADDRESS equ 00h
 EN_AEOI equ 1h
 MASK equ 00h
 EOI equ 20h
-#stack
+#stack pointer
 stackPointer equ 0800h
 #peripherals
 leds equ 200h

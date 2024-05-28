@@ -4,7 +4,7 @@ import { AfterViewInit, ElementRef, ViewChild } from "@angular/core"
 import * as ace from "ace-builds"
 import './mode-assembly_vsh';
 
-import TabsService from 'src/app/services/tabs.service';
+import TabsService from 'src/app/services/tabs/tabs.service';
 
 @Component({
     selector: 'app-code-editor',
@@ -24,7 +24,7 @@ import TabsService from 'src/app/services/tabs.service';
       //ace.config.set('basePath', 'C:/Users/Utente/git/VirtualShockProject/frontend/node_modules/ace-builds/src-noconflict');
       this.aceEditor=ace.edit(this.editor.nativeElement)
 
-      this.aceEditor.session.setValue("<h1>Ace editor component works!</h1>")
+      this.aceEditor.session.setValue("Select 'new file' to start a new project, or open an existing one with 'open file'")
       this.aceEditor.setTheme('ace/theme/twilight');
       this.aceEditor.session.setMode('ace/mode/assembly_vsh');
 

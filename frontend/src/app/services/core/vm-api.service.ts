@@ -4,12 +4,12 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 
-import { ExecutionApiResponse } from '../interfaces/simulation-output.interface';
+import { ExecutionApiResponse } from '../../interfaces/simulation-output.interface';
 
 @Injectable({
     providedIn: 'root',
 })
-export default class APIService {
+export default class VirtualMachineAPIService {
     
     constructor(private http: HttpClient) {}
 
@@ -46,18 +46,6 @@ export default class APIService {
       const rootPath = 'http://localhost:8084/vshapi';
       const requestBody={source:"direct",value:stringProgram}//"./testProgram.txt"
       return this.http.post(`${rootPath}/execute`,requestBody).pipe(
-        map((payload: any) => {
-          return payload as ExecutionApiResponse;
-        }),
-        catchError(this.handleError)
-      );
-    }
-
-    assemble(rawText:string){
-      console.log("Assembling code...")
-      const rootPath = 'http://localhost:3005/vshapi';
-      const requestBody={source:"raw",value:rawText}//"./testProgram.txt"
-      return this.http.post(`${rootPath}/assemble`,requestBody).pipe(
         map((payload: any) => {
           return payload as ExecutionApiResponse;
         }),

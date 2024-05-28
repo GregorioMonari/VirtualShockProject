@@ -1,7 +1,7 @@
 <div class="flex w-full" #editor>
     <div *ngFor="let id of $tabs.keys()">
         <div (click)="onTabClick(id)" class="pl-1 pr-1 cursor-pointer text-white">
-            {{$tabs.get(id)?.name}}<span *ngIf="!$tabs.get(id)?.isSaved">&nbsp;*</span> |
+            {{$tabs.get(id)?.displayName}}<span *ngIf="!$tabs.get(id)?.saved">&nbsp;*</span> |
         </div>
     </div>
 </div>
