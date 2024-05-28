@@ -15,9 +15,18 @@ import TabsService from 'src/app/services/tabs/tabs.service';
       private tabs:TabsService
       ) {}
 
+    saveFile(){
+      try{
+        this.tabs.saveActiveTab();
+      }catch(err){
+        console.error('failed to save file:',err)
+      }
+    }
+
     async compile(){
       const tab= this.tabs.getActiveTab();
       if(tab.saved){
+        console.log("compiling file: "+tab.path)
         await this.assembler.assemble(tab.path);
       }else alert("save file before compiling")
     }

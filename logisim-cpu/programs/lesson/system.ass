@@ -1,0 +1,70 @@
+//ESERCITAZIONE #2: cicli, procedure e periferiche
+//Pic addresses
+ICW1 equ 100h
+ICW2 equ 101h
+ICW4 equ 101h
+OCW1 equ 101h
+OCW2 equ 100h
+//pic command words
+RESET equ 13h
+ADDRESS equ 00h
+EN_AEOI equ 1h //disattivato
+MASK equ 00h
+EOI equ 20h
+//Colored led
+STATUS_LED equ 200h
+LED_GREEN equ 01h
+LED_BLUE equ 04h
+//Leds 344
+LEDS equ 300h
+//Stdio
+TTY equ 400h  
+KEYBOARD equ 500h  
+//Stack
+stackPointer equ 0800h
+//Synchronization flag
+flag db 1
+char db 1
+
+
+procedure main{
+    cli
+    //1. load stack pointer into r30
+    addi r30,r0,stackPointer 
+    //2. init pic
+    addi r1,r0,RESET
+    out ICW1(r0),r1
+    addi r1,r0,ADDRESS
+    out ICW2(r0),r1
+    addi r1,r0,EN_AEOI
+    out ICW4(r0),r1 
+    sti //address 08h
+
+    //wait for interrupt
+    wait: lw r1, flag(r0) //address 09h
+    beqz r1,wait //address 0ah (10)
+    
+    //Handle input char
+    sw flag(r0),r0 //reset flag
+    lw r1,char(r0)
+    out TTY(r0),r1
+
+    j wait //wait infinitely for keyboard output
+}
+
+
+interrupt_routine read_keyboard_char{
+    push r1
+    in r1,KEYBOARD(r0) //read from keyboard buffer
+    sw char(r0),r1
+    addi r1,r0,1
+    sw flag(r0),r1
+    addi r1,r0,EOI
+    out OCW2(r0),r1
+    pop r1
+    rfe
+}
+
+
+
+

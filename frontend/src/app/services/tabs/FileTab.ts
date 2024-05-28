@@ -10,7 +10,9 @@ export default class FileTab{
     private _saved: boolean;
     private _content: string;
     private _active: boolean;
-    constructor(id: string, filename: string, content: string, aceEditor: ace.Ace.Editor){
+
+    private _isNewUntitledFile:boolean;
+    constructor(id: string, filename: string, content: string, aceEditor: ace.Ace.Editor, isNewUntitledFile=false){
         this._id= id;
         this._filename= filename;
         this._content= content;
@@ -18,6 +20,7 @@ export default class FileTab{
         this._active= false; //if deactivated content is cached into this object. Else, content is into the editor
         this._displayname= this.getDisplayName(filename)
         this._$aceEditor= aceEditor;
+        this._isNewUntitledFile=isNewUntitledFile;
     }
 
     public set saved(flag : boolean) { this._saved = flag; }
@@ -25,6 +28,9 @@ export default class FileTab{
 
     public set active(flag : boolean) { this._active = flag; }
     public get active() : boolean { return  this._active; }
+
+    public set isNewUntitledFile(flag : boolean) { this._isNewUntitledFile = flag; }
+    public get isNewUntitledFile() : boolean { return  this._isNewUntitledFile; }
 
     public set text(content: string) {
         if(this.active){

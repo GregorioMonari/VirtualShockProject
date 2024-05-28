@@ -54,11 +54,12 @@ class IpcApi{
     }
 
     spawnAssembler(filename){
+        console.log("running assembler for file: "+filename)
         let out="";
         return new Promise((resolve,reject)=>{
             const childProcess = spawn(
                 'node', //cmd
-                ['../compiler/build/main.js','assemble','-f',filename] //args
+                ['../compiler/build/main.js','assemble','-s',filename] //args
             );
             childProcess.stdout.on('data', (data) => {
                 //console.log(`stdout: ${data}`);
@@ -66,7 +67,8 @@ class IpcApi{
             });
             
             childProcess.stderr.on('data', (data) => {
-                console.error(`stderr: ${data}`);
+                console.error(`catched error: ${data}`);
+                reject(data+"\nAssembler output:\n"+out)
             });
             
             childProcess.on('close', (code) => {

@@ -30,4 +30,16 @@ export default class AssemblerAPIService {
       );
       */
     }
+
+    assembleSync(filename:string){
+      return new Promise((resolve,reject)=>{
+        window.api.assemble(filename)
+        .then(output=>{
+            resolve(output)
+        })
+        .catch(err=>{
+            reject(err)
+        })
+      })
+    }
 }

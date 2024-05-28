@@ -35,11 +35,11 @@ export default class TabsService {
     constructor(private fs: FileSystemService){}
 
 
-    addTab(filename:string,text:string): string{
+    addTab(filename:string,text:string,isNewUntitledFile=false): string{
         console.log("adding tab for file: "+filename)
         const newTabId=this.openedTabs.toString();
         this.openedTabs++;
-        const newFileTab:FileTab= new FileTab(newTabId,filename,text,this.$aceEditor);
+        const newFileTab:FileTab= new FileTab(newTabId,filename,text,this.$aceEditor,isNewUntitledFile);
         if(!this.tabsDb.has(newTabId)){
             this.tabsDb.set(newTabId,newFileTab);
         }
@@ -91,12 +91,35 @@ export default class TabsService {
         console.log("switched active tab")
     }
 
-    saveTab(id:string){
+    async saveTab(id:string){
         const tab= this.getTab(id);
         if(!tab.saved){
-            console.log("saving file: "+tab.path)
-            this.fs.saveFile(tab.path,tab.text);
-            tab.saved=true;
+            if(!tab.isNewUntitledFile){
+                console.log("saving file: "+tab.path)
+                this.fs.saveFile(tab.path,tab.text);
+                tab.saved=true;
+            }else{
+                console.error('save file not implemented for new files')
+                /*
+                console.log('saving new file')
+                const options = {
+                    properties: ['openFile']
+                  };
+                  try {
+                    const filePaths = await window.api.openFileDialog(options);
+                    if (filePaths.length > 0) {
+                      const filename= filePaths[0]
+                      console.log('Selected file:', filename);
+                      tab.path=filename;
+                      console.log("saving file: "+tab.path)
+                      this.fs.saveFile(tab.path,tab.text);
+                      tab.saved=true;
+                    }
+                  } catch (err) {
+                    console.error('Failed to open file dialog:', err);
+                  }
+                */
+            }
         }else{
             console.warn("tab "+id+" already saved, skipping saving process")
         }

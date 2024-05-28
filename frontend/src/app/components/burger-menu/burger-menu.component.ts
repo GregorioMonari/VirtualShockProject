@@ -12,6 +12,14 @@ export class BurgerMenuComponent{
     private fs: FileSystemService,
     private tabs: TabsService
   ){}
+  async newFile(){
+    const tabId= this.tabs.addTab('Untitled',"",true)
+    const tab= this.tabs.getTab(tabId);
+    tab.saved=false;
+    this.tabs.switchActiveTab(tabId)
+    console.log(this.tabs.getTabs())
+  }
+
   async openFile(){
     const options = {
       properties: ['openFile']

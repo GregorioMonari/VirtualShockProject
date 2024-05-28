@@ -11,6 +11,10 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
         // regexps are ordered -> the first match is used
        this.$rules = {
             "start" : [
+                {
+                    token: 'comment.line', //temp
+                    regex: '//.*'
+                },
                 { 
                     token: 'constant.character.decimal.assembly',
                     regex: '\\b[0-9]+\\b' 
@@ -40,7 +44,12 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
                 },
                 {
                     token: "function.key", // String, Array, or Function: the CSS token to apply
-                    regex: /proc* /, // String or RegExp: the regexp to match
+                    regex: /procedure* /, // String or RegExp: the regexp to match
+                    next:  "function_key"   // [Optional] String: next state to enter
+                },
+                {
+                    token: "function.key", // String, Array, or Function: the CSS token to apply
+                    regex: /interrupt_routine* /, // String or RegExp: the regexp to match
                     next:  "function_key"   // [Optional] String: next state to enter
                 }
             ],
@@ -57,6 +66,10 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
                 }
             ],
             "function_body": [
+                {
+                    token: 'comment.line', //temp
+                    regex: '//.*'
+                },
                 {
                     token: "tag", // String, Array, or Function: the CSS token to apply
                     regex: /([^:\s]+)(?= *:)/, // String or RegExp: the regexp to match
@@ -152,7 +165,7 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
                 },
                 {
                     token: "instruction.tag_reference", // String, Array, or Function: the CSS token to apply
-                    regex: /(?<=( |,))(.*)/, // String or RegExp: the regexp to match
+                    regex: /(?<=( |,))(.*)(?=\/\/)/, // String or RegExp: the regexp to match
                     next:  "function_body",   // [Optional] String: next state to enter
                     caseInsensitive: true 
                 },

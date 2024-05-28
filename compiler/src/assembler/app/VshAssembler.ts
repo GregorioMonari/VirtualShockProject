@@ -137,7 +137,19 @@ export default class VshAssembler{
     }
 
 
-    private removeComments(rawText:string){
+    private removeComments(rawText: string){
+        // Regular expression to match single-line comments
+        const singleLineCommentPattern = /\/\/.*$/gm;
+        // Regular expression to match multi-line comments
+        const multiLineCommentPattern = /\/\*[\s\S]*?\*\//gm;
+        // Remove single-line comments
+        let cleanedText = rawText.replace(singleLineCommentPattern, '');
+        // Remove multi-line comments
+        cleanedText = cleanedText.replace(multiLineCommentPattern, '');
+        return cleanedText;
+    }
+
+    private removePythonComments(rawText:string){
         //Comments type: #
         let out="";
         let currChar='';

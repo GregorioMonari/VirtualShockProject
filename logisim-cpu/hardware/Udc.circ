@@ -672,9 +672,10 @@
       <a name="addrWidth" val="6"/>
       <a name="appearance" val="classic"/>
       <a name="contents">addr/data: 6 16
-a1 c1 8*0 40e1 4101 7*0 190 4122
-4153 4*0 41b1 41d1 1f1 11*0 4212 4244
-4293 42d3 4313 4392 4353 3c0 3d0 3e3
+a1 c1 8*0 40e1 4101 8*0 4122 4153
+190 c1a0 0 0 41b1 41d1 1f1 11*0
+4212 4244 4293 42d3 4313 4392 4353 3c0
+3d0 3e3
 </a>
       <a name="dataWidth" val="16"/>
     </comp>

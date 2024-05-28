@@ -17,7 +17,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 
+
 /* TEMP: ACE DIRECTIVES */
+.ace_comment.ace_line{
+    color:rgb(99, 99, 99)
+}
 .ace_directive.ace_equ{
     color:rgb(67, 141, 33);
 }

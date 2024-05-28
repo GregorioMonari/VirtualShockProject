@@ -1,0 +1,39 @@
+//ESERCITAZIONE #2: cicli, procedure e periferiche
+//Colored led
+STATUS_LED equ 200h
+LED_GREEN equ 01h
+LED_BLUE equ 04h
+//Leds 344
+LEDS equ 300h
+//Stack
+stackPointer equ 0800h
+
+procedure main{
+    addi r30,r0,stackPointer
+    call status_led_blue
+    
+    addi r1,r0,2h
+    loop: subi r1,r1,1
+    out LEDS(r0),r1
+    bneqz r1,loop
+    
+    call status_led_green
+}
+
+procedure status_led_green{
+    push r1
+    addi r1,r0,LED_GREEN
+    out STATUS_LED(r0),r1
+    pop r1
+    rfe
+}
+
+procedure status_led_blue{
+    push r1
+    addi r1,r0,LED_BLUE
+    out STATUS_LED(r0),r1
+    pop r1
+    rfe
+}
+
+

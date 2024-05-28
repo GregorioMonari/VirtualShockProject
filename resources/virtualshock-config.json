@@ -47,11 +47,11 @@
 
         "jr":{
             "type":"register",
-            "copBytes":"010011"
+            "copBytes":"010110"
         },
         "j":{
             "type":"jump",
-            "copBytes":"010100",
+            "copBytes":"010111",
             "fields":["cost"]
         },
 

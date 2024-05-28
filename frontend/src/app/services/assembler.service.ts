@@ -15,7 +15,29 @@ export default class AssemblerService {
     constructor(private apiService: AssemblerAPIService){
     }
 
-    assemble(filename: string): Promise<string>{
+    
+    async assemble(filename: string): Promise<string>{
+        const startTime = performance.now();
+        this.status.next("running")
+        this.parserOutput.next("Assemblying file: "+filename+"\n");
+        try{
+            const out= await this.apiService.assembleSync(filename)
+            console.log(out)
+            this.machineCode.next("");//TODO: machineCode);
+            this.parserOutput.next("success!\n")
+            // Code to measure performance
+            const endTime = performance.now();
+            const executionTime = endTime - startTime;
+            this.parserOutput.next(`[Execution time: ${executionTime} milliseconds]\n`)
+            this.status.next("completed")
+        }catch(e){
+            this.parserOutput.next("failed with error:\n")
+            this.parserOutput.next(e as string)
+        }
+        return "machineCode"
+    }
+    
+    assembleFromObservable(filename: string): Promise<string>{
         const startTime = performance.now();
         this.status.next("running")
         return new Promise((resolve,reject)=>{

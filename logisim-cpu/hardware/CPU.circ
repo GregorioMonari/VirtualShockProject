@@ -4,7 +4,7 @@
 
   <lib desc="#Wiring" name="0">
     <tool name="Splitter">
-      <a name="facing" val="west"/>
+      <a name="facing" val="north"/>
     </tool>
     <tool name="Pin">
       <a name="appearance" val="classic"/>
@@ -14,7 +14,7 @@
       <a name="facing" val="south"/>
     </tool>
     <tool name="Tunnel">
-      <a name="facing" val="east"/>
+      <a name="facing" val="north"/>
     </tool>
     <tool name="Clock">
       <a name="facing" val="south"/>
@@ -22,7 +22,7 @@
   </lib>
   <lib desc="#Gates" name="1">
     <tool name="Controlled Buffer">
-      <a name="facing" val="north"/>
+      <a name="facing" val="west"/>
     </tool>
   </lib>
   <lib desc="#Plexers" name="2">
@@ -50,8 +50,8 @@
   <lib desc="#Input/Output-Extra" name="10"/>
   <lib desc="#Soc" name="11"/>
   <lib desc="file#Udc.circ" name="12"/>
-  <lib desc="file#core\PIC.circ" name="13"/>
-  <lib desc="file#DataPath.circ" name="14"/>
+  <lib desc="file#DataPath.circ" name="13"/>
+  <lib desc="file#core\PIC.circ" name="14"/>
   <main name="cpu_main"/>
   <options>
     <a name="gateUndefined" val="ignore"/>
@@ -94,7 +94,7 @@
   <circuit name="system">
     <a name="circuit" val="system"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
-    <a name="simulationFrequency" val="1.0"/>
+    <a name="simulationFrequency" val="256.0"/>
     <comp lib="0" loc="(130,40)" name="Pin">
       <a name="appearance" val="NewPins"/>
     </comp>
@@ -175,11 +175,11 @@
       <a name="facing" val="west"/>
       <a name="value" val="0x0"/>
     </comp>
-    <comp lib="0" loc="(600,530)" name="Pin">
+    <comp lib="0" loc="(610,550)" name="Pin">
       <a name="appearance" val="NewPins"/>
-      <a name="facing" val="south"/>
+      <a name="facing" val="west"/>
     </comp>
-    <comp lib="0" loc="(610,550)" name="Tunnel">
+    <comp lib="0" loc="(620,520)" name="Tunnel">
       <a name="label" val="IR1"/>
     </comp>
     <comp lib="0" loc="(690,380)" name="Tunnel">
@@ -245,35 +245,50 @@
       <a name="facing" val="east"/>
       <a name="label" val="ck"/>
     </comp>
-    <comp lib="13" loc="(570,520)" name="pic_main"/>
+    <comp lib="14" loc="(570,520)" name="pic_main">
+      <a name="labelvisible" val="false"/>
+    </comp>
     <comp lib="4" loc="(70,330)" name="ROM">
       <a name="addrWidth" val="10"/>
       <a name="appearance" val="classic"/>
       <a name="contents">addr/data: 10 32
 c0000000 281e0800 28010013 b4010100 28010000 b4010101 28010001 b4010101
-bc000000 54010400 6820fffe b4000200 a03e0000 28010001 b4010200 a43e0000
-b01e0000 a03e0000 a81efff9 50010400 a43e0000 c7c00000 746*0 11
+bc000000 54010400 6820fffe 50000400 54010401 b4010400 5ffffffa a03e0000
+b8010500 50010401 28010001 50010400 28010020 b4010100 a43e0000 c7c00000
+744*0 f
 </a>
       <a name="dataWidth" val="32"/>
-      <a name="labelvisible" val="true"/>
     </comp>
     <comp lib="4" loc="(70,520)" name="RAM">
       <a name="addrWidth" val="10"/>
       <a name="appearance" val="classic"/>
       <a name="asyncread" val="true"/>
       <a name="dataWidth" val="32"/>
+      <a name="labelvisible" val="true"/>
     </comp>
-    <comp lib="5" loc="(1010,620)" name="LedBar"/>
-    <comp lib="5" loc="(130,170)" name="7-Segment Display"/>
-    <comp lib="5" loc="(180,170)" name="7-Segment Display"/>
+    <comp lib="5" loc="(1010,620)" name="LedBar">
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp lib="5" loc="(130,170)" name="7-Segment Display">
+      <a name="labelvisible" val="true"/>
+    </comp>
+    <comp lib="5" loc="(180,170)" name="7-Segment Display">
+      <a name="labelvisible" val="true"/>
+    </comp>
     <comp lib="5" loc="(190,60)" name="LED">
       <a name="facing" val="north"/>
+      <a name="labelvisible" val="false"/>
     </comp>
     <comp lib="5" loc="(210,60)" name="LED">
       <a name="facing" val="north"/>
+      <a name="labelvisible" val="false"/>
     </comp>
-    <comp lib="5" loc="(230,170)" name="7-Segment Display"/>
-    <comp lib="5" loc="(540,650)" name="RGBLED"/>
+    <comp lib="5" loc="(230,170)" name="7-Segment Display">
+      <a name="labelvisible" val="true"/>
+    </comp>
+    <comp lib="5" loc="(540,650)" name="RGBLED">
+      <a name="labelvisible" val="false"/>
+    </comp>
     <comp lib="5" loc="(550,300)" name="TTY">
       <a name="bg" val="#000000"/>
       <a name="color" val="#ffffff"/>
@@ -283,6 +298,7 @@ b01e0000 a03e0000 a81efff9 50010400 a43e0000 c7c00000 746*0 11
     <comp lib="5" loc="(700,340)" name="Keyboard"/>
     <comp lib="5" loc="(840,590)" name="RGBLED">
       <a name="facing" val="north"/>
+      <a name="labelvisible" val="false"/>
     </comp>
     <comp lib="8" loc="(1095,630)" name="Text">
       <a name="text" val="led_0"/>
@@ -321,19 +337,35 @@ b01e0000 a03e0000 a81efff9 50010400 a43e0000 c7c00000 746*0 11
     <comp lib="9" loc="(130,270)" name="Binary_to_BCD_converter"/>
     <comp lib="9" loc="(180,170)" name="BCD_to_7_Segment_decoder"/>
     <comp lib="9" loc="(230,170)" name="BCD_to_7_Segment_decoder"/>
-    <comp loc="(1100,530)" name="output_interface"/>
-    <comp loc="(230,20)" name="cpu_main"/>
-    <comp loc="(320,380)" name="rom_adapter"/>
-    <comp loc="(320,510)" name="ram_adapter"/>
+    <comp loc="(1100,530)" name="output_interface">
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp loc="(230,20)" name="cpu_main">
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp loc="(320,380)" name="rom_adapter">
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp loc="(320,510)" name="ram_adapter">
+      <a name="labelvisible" val="false"/>
+    </comp>
     <comp loc="(460,230)" name="cs_io">
       <a name="label" val="cs_inout"/>
+      <a name="labelvisible" val="false"/>
     </comp>
     <comp loc="(460,50)" name="cs_memory">
       <a name="label" val="cs_mem"/>
+      <a name="labelvisible" val="false"/>
     </comp>
-    <comp loc="(600,370)" name="tty_interface"/>
-    <comp loc="(820,370)" name="keyboard_interface"/>
-    <comp loc="(870,530)" name="output_interface"/>
+    <comp loc="(600,370)" name="tty_interface">
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp loc="(820,370)" name="keyboard_interface">
+      <a name="labelvisible" val="false"/>
+    </comp>
+    <comp loc="(870,530)" name="output_interface">
+      <a name="labelvisible" val="false"/>
+    </comp>
     <wire from="(1010,570)" to="(1010,620)"/>
     <wire from="(1020,570)" to="(1020,620)"/>
     <wire from="(1030,480)" to="(1030,530)"/>
@@ -434,7 +466,7 @@ b01e0000 a03e0000 a81efff9 50010400 a43e0000 c7c00000 746*0 11
     <wire from="(560,480)" to="(560,520)"/>
     <wire from="(560,480)" to="(770,480)"/>
     <wire from="(570,310)" to="(570,370)"/>
-    <wire from="(570,540)" to="(600,540)"/>
+    <wire from="(570,540)" to="(610,540)"/>
     <wire from="(570,550)" to="(610,550)"/>
     <wire from="(570,560)" to="(580,560)"/>
     <wire from="(570,570)" to="(580,570)"/>
@@ -448,7 +480,8 @@ b01e0000 a03e0000 a81efff9 50010400 a43e0000 c7c00000 746*0 11
     <wire from="(580,590)" to="(580,600)"/>
     <wire from="(580,590)" to="(590,590)"/>
     <wire from="(580,600)" to="(580,610)"/>
-    <wire from="(600,530)" to="(600,540)"/>
+    <wire from="(610,520)" to="(610,540)"/>
+    <wire from="(610,520)" to="(620,520)"/>
     <wire from="(690,380)" to="(730,380)"/>
     <wire from="(700,340)" to="(700,370)"/>
     <wire from="(700,370)" to="(750,370)"/>
@@ -766,7 +799,7 @@ b01e0000 a03e0000 a81efff9 50010400 a43e0000 c7c00000 746*0 11
       <a name="size" val="30"/>
     </comp>
     <comp lib="12" loc="(430,200)" name="udc_main"/>
-    <comp lib="14" loc="(860,150)" name="dp_main"/>
+    <comp lib="13" loc="(860,150)" name="dp_main"/>
     <comp lib="2" loc="(840,430)" name="Multiplexer">
       <a name="facing" val="north"/>
       <a name="selloc" val="tr"/>

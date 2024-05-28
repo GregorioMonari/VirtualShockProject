@@ -292,7 +292,7 @@ export default class NumberConversionManager{
                     binString=binString+"0"
                 }
             }else{
-                throw new Error("Dec2bin Unsigned accepts only numbers >=0, received a negative number")
+                throw new Error("Dec2bin Unsigned accepts only numbers >=0, received a negative number: "+decimal)
             }
         }
 

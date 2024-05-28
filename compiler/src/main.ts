@@ -11,6 +11,7 @@ async function main(){
         if(config.source){
             await assemble(config.source as string,config.target as string|null,config.customConfig as string|null)
         }else{
+            console.log("missing source, args:",process.argv)
             printHelp()
             return;
         }
@@ -18,10 +19,12 @@ async function main(){
         if(config.source&&config.target){
             await mapRtl(config.source as string,config.target as string, config.target2 as string|null, config.customConfig as string|null)
         }else{
+            console.log("missing source and target")
             printHelp()
             return;
         }
     }else{
+        console.log("unknown command")
         printHelp()
         return;
     }
