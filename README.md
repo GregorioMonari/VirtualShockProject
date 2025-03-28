@@ -5,6 +5,9 @@
 VirtualShock project allows to **write, test and run assembly code** in a simple and visual way.  
 Based on my bachelor's degree thesis: https://amslaurea.unibo.it/25411/  
 
+## Prerequisites
+- https://github.com/logisim-evolution/logisim-evolution/releases
+
 ## Installation
 1. **Download the latest release** at: https://github.com/GregorioMonari/VirtualShockProject/releases
 2. Unzip
