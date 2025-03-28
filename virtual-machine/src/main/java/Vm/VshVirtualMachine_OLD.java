@@ -1,29 +1,76 @@
 package Vm;
 
 import lib.InstructionDecoder;
-import java.util.ArrayList;
+
 import java.util.List;
 
-public class VshVirtualMachine {
-    private final int[] rf= new int[32]; //Register File
-    private int pc=0;
+public class VshVirtualMachine_OLD {
+    //Registers
+    private int[] rf= new int[32]; //Register File
     private int a,b,ir;
-    private int[] memory; //DLX mem
+    private int c,temp,iar,mar,mdr;//OPZIONALI
+    private int pc=0;
+    //Memory
     private final int memorySize;
-    //Flags
-    private String state;
+    private int[] memory; //Memoria DLX
 
     //Utility
     private InstructionDecoder decode= new InstructionDecoder();
+    private boolean isRunning=false;
 
-    public VshVirtualMachine(List<Integer> program, int memorySize) throws Exception {
-        if(program.isEmpty()) throw new Exception("Program can't be empty");
-        this.memorySize=memorySize;
+    public int[] getRf(){return this.rf;}
+    public int[] getMemory(){return this.memory;}
+    public int getPc(){return this.pc;}
+    public boolean isRunning(){
+        return isRunning;
+    }
+    public void printInfo(){
+        String msg="(debug) pc:"+pc+", rf: ";
+        for(int i=0;i<rf.length;i++){
+            if(rf[i]!=0){
+                msg=msg+"R"+i+"="+rf[i]+" ";
+            }
+        }
+        msg=msg+", stack: ";
+        if(rf[30]!=memorySize){
+            for(var i=0;i<memorySize-rf[30];i++){
+                int currAddr=(memorySize-i);
+                msg=msg+"M["+currAddr+"]="+memory[currAddr]+" ";
+            }
+        }else{
+            msg=msg+"empty";
+        }
+        System.out.println(msg);
+    }
+
+    public void initVM(){
         memory=new int[this.memorySize];
+        //Init RF
         for(int i=0;i<32;i++){
             rf[i]=0;
         }
-        //Load program in memory
+        //STACK POINTER?
+        rf[30]=memorySize; //l'ultima cella occupata
+    }
+
+    public VshVirtualMachine_OLD(int memorySize, int[] program) throws Exception {
+        if(program.length==0) throw new Exception("Program can't be empty");
+        //1. SET FINAL VARIABLE MEMORY SIZE IN THE CONSTRUCTOR
+        this.memorySize=memorySize;
+        //2. INITIALIZE VM (clean registers, etc...)
+        initVM();
+        //3. COPY PROGRAM IN MEMORY
+        for(int i=0;i<program.length;i++){
+            memory[i]=program[i];
+        }
+    }
+    public VshVirtualMachine_OLD(int memorySize, List<Integer> program) throws Exception {
+        if(program.size()==0) throw new Exception("Program can't be empty");
+        //1. SET FINAL VARIABLE MEMORY SIZE IN THE CONSTRUCTOR
+        this.memorySize=memorySize;
+        //2. INITIALIZE VM (clean registers, etc...)
+        initVM();
+        //3. COPY PROGRAM IN MEMORY
         for(int i=0;i<program.size();i++){
             memory[i]=program.get(i);
         }
@@ -32,6 +79,15 @@ public class VshVirtualMachine {
 
     public String step() throws Exception {
         String stepOutput="";
+        if(!isRunning){
+            if(pc==0){
+                isRunning=true;//force activate machine if manual stepping
+            }else{
+                //the machine has been halted by a halt function, further step is not allowed
+                System.out.println("Machine is halted, cannot step");
+                return "";
+            }
+        }
         //1. FETCH
         ir=memory[pc];
         //2. DECODE
