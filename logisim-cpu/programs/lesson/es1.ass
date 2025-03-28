@@ -1,0 +1,5 @@
+//ESERCITAZIONE #1: esempio base istruzione alu
+procedure main{
+    addi r1,r0,02h
+    addi r2,r0,05h
+}

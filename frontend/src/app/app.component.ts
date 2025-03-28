@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import TabsService from './services/tabs.service';
+import TabsService from './services/tabs/tabs.service';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +13,9 @@ export class AppComponent {
 
   ngOnInit(){
     //wait for tabs to init the editor before loading files
-    this.tabs.getIsReady().subscribe((value)=>{
+    /*this.tabs.getIsReady().subscribe((value)=>{
       if(value){
-        const tabId1=this.tabs.addTab("main.js",`initialValue equ 0
+        const tabId1=this.tabs.addTab(`initialValue equ 0
 nloops equ 5
 
 proc main {
@@ -36,7 +36,7 @@ proc main {
 
 
     //this.test()
-
+    */
   }
 
   test(){

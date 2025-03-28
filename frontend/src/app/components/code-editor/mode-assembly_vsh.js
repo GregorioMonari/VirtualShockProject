@@ -11,6 +11,10 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
         // regexps are ordered -> the first match is used
        this.$rules = {
             "start" : [
+                {
+                    token: 'comment.line', //temp
+                    regex: '//.*'
+                },
                 { 
                     token: 'constant.character.decimal.assembly',
                     regex: '\\b[0-9]+\\b' 
@@ -40,7 +44,12 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
                 },
                 {
                     token: "function.key", // String, Array, or Function: the CSS token to apply
-                    regex: /proc* /, // String or RegExp: the regexp to match
+                    regex: /procedure* /, // String or RegExp: the regexp to match
+                    next:  "function_key"   // [Optional] String: next state to enter
+                },
+                {
+                    token: "function.key", // String, Array, or Function: the CSS token to apply
+                    regex: /interrupt_routine* /, // String or RegExp: the regexp to match
                     next:  "function_key"   // [Optional] String: next state to enter
                 }
             ],
@@ -57,6 +66,10 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
                 }
             ],
             "function_body": [
+                {
+                    token: 'comment.line', //temp
+                    regex: '//.*'
+                },
                 {
                     token: "tag", // String, Array, or Function: the CSS token to apply
                     regex: /([^:\s]+)(?= *:)/, // String or RegExp: the regexp to match
@@ -77,7 +90,7 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
                 },
                 {
                     token: "instruction.immediate.cop", // String, Array, or Function: the CSS token to apply
-                    regex: /(addi|subi|multi|divi|andi|ori|seqi|sneqi|sgti|sgei|slti|slei|push|pop)* /, // String or RegExp: the regexp to match
+                    regex: /(addi|subi|multi|divi|andi|ori|seqi|sneqi|sgti|sgei|slti|slei)* /, // String or RegExp: the regexp to match
                     next:  "instruction_immediate_body",   // [Optional] String: next state to enter
                     caseInsensitive: true 
                 },
@@ -87,6 +100,22 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
                     next:  "jump_tag_reference",   // [Optional] String: next state to enter
                     caseInsensitive: true 
                 },
+                {
+                    token: "instruction.memory.cop",
+                    regex: /(push|pop)/,
+                    next: "function_body"
+                },
+                {
+                    token: "instruction.memory.cop",
+                    regex: /(sw|lw|out|in)/,
+                    next: "instruction_memory_body"
+                },
+                {
+                    token: "instruction.call.cop",
+                    regex: /(call)/,
+                    next: "instruction_call_constant"
+                },
+
                 //SPECIAL INSTRUCTIONS
                 {//HALT
                     token: "instruction.register.cop", // String, Array, or Function: the CSS token to apply
@@ -95,14 +124,40 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
                     caseInsensitive: true 
                 },
                 {//BEQZ/BNEQZ
-                    token: "instruction.immediate.cop", // String, Array, or Function: the CSS token to apply
+                    token: "instruction.beqz.cop", // String, Array, or Function: the CSS token to apply
                     regex: /(beqz|bneqz)* /, // String or RegExp: the regexp to match
                     next:  "instruction_beqz_body",   // [Optional] String: next state to enter
                     caseInsensitive: true 
                 },
             ],
+            "instruction_call_constant": [
+                {
+                    token: "instruction.call.constant",
+                    regex: /(?<=( ))([A-Za-z0-9_]+)/,
+                    next: "function_body"
+                }
+            ],
+            "instruction_memory_body": [
+                {
+                    token: "instruction.memory.constant",
+                    regex: /(?<=( |,))([A-Za-z0-9_]+)(?=(\())/,
+                    next: "function_body"
+                }
+            ],
             //IMMEDIATE
             "instruction_immediate_body": [
+                {
+                    token: "instruction.immediate.register", // String, Array, or Function: the CSS token to apply
+                    regex: /r[0-9]+/, // String or RegExp: the regexp to match
+                    next:  "instruction_immediate_body",   // [Optional] String: next state to enter
+                    caseInsensitive: true 
+                },
+                {
+                    token: "instruction.immediate.constant", // String, Array, or Function: the CSS token to apply
+                    regex: /(?<=( |,))([A-Za-z0-9_]+)/, // String or RegExp: the regexp to match
+                    next:  "function_body",   // [Optional] String: next state to enter
+                    caseInsensitive: true 
+                },
                 { 
                     token: 'constant.character.decimal.assembly',
                     regex: '\\b[0-9]+\\b',
@@ -114,19 +169,7 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
                     regex: '\\b[A-F0-9]+h\\b',
                     next:  "function_body",   // [Optional] String: next state to enter
                     caseInsensitive: true 
-                },
-                {
-                    token: "instruction.immediate.register", // String, Array, or Function: the CSS token to apply
-                    regex: /r[0-9]+/, // String or RegExp: the regexp to match
-                    next:  "instruction_immediate_body",   // [Optional] String: next state to enter
-                    caseInsensitive: true 
-                },
-                {
-                    token: "instruction.immediate.constant", // String, Array, or Function: the CSS token to apply
-                    regex: /(?<=( |,))(.*)/, // String or RegExp: the regexp to match
-                    next:  "function_body",   // [Optional] String: next state to enter
-                    caseInsensitive: true 
-                },
+                }
             ],
             //Beqz
             "instruction_beqz_body": [
@@ -152,7 +195,7 @@ ace.define("ace/mode/assembly_vsh_highlight_rules",["require","exports","module"
                 },
                 {
                     token: "instruction.tag_reference", // String, Array, or Function: the CSS token to apply
-                    regex: /(?<=( |,))(.*)/, // String or RegExp: the regexp to match
+                    regex: /(?<=( |,))([A-Za-z0-9_]+)/, // String or RegExp: the regexp to match
                     next:  "function_body",   // [Optional] String: next state to enter
                     caseInsensitive: true 
                 },

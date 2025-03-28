@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import APIService from 'src/app/services/api.service';
+import APIService from 'src/app/services/core/vm-api.service';
 
 @Component({
     selector: 'app-footer',

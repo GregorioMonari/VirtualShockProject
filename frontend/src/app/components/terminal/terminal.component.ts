@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import SimulationService from 'src/app/services/simulation.service';
-import ParserService from 'src/app/services/parser.service';
+import ParserService from 'src/app/services/assembler.service';
 
 @Component({
     selector: 'app-terminal',
