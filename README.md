@@ -30,6 +30,7 @@ To run the IDE components independently, java and nodejs are required.
 ## USAGE
 Quick-start:
 - open logisim and load the circuit: `logisim-cpu/hardware/CPU.circ`
+- move to subcircuit: `system`
 - refresh with `ctrl+r`
 - start/stop the simulation with `ctrl+k`
 
