@@ -2,28 +2,40 @@
 ![virtualshock](docs/VirtualShock.png)
 
 ## Introduction
-VirtualShock project allows to **write, test and run assembly code** in a simple and visual way.  
+The VirtualShock project enables the **execution of assembly code** on a simulated DLX processor while providing **real-time execution analysis**. This offers a more interactive and visual approach to understanding processors operations.
+To facilitate writing and debugging DLX programs, the project includes an integrated Assembly and RTL IDE.
 Based on my bachelor's degree thesis: https://amslaurea.unibo.it/25411/  
-
-## Prerequisites
-- https://github.com/logisim-evolution/logisim-evolution/releases
-
-## Installation
-1. **Download the latest release** at: https://github.com/GregorioMonari/VirtualShockProject/releases
-2. Unzip
-3. Click `electron.exe` to launch the application
-
-## Modules
+### Modules
 - `hardware`: logisim components, ram and roms
 - `frontend`: angular ide
 - `virtual-machine`: java based virtual machine
 - `compiler`: node based assembly and rtl parser
 
-The compiler allows to perform 2 tasks:
-1. Parse rtl code to machinecode
-2. Parse assembly code to machinecode
 
-## Quick start for developers
+
+## INSTALLATION
+### Prerequisites
+- https://github.com/logisim-evolution/logisim-evolution/releases
+### CPU
+Clone this repo to get started. 
+### IDE
+1. **Download the latest release** at: https://github.com/GregorioMonari/VirtualShockProject/releases
+2. Unzip
+3. Click `electron.exe` to launch the application
+### ASSEMBLER
+To run the IDE components independently, java and nodejs are required.
+
+
+
+## USAGE
+Quick-start:
+- open logisim and load the circuit: `logisim-cpu/hardware/CPU.circ`
+- refresh with `ctrl+r`
+- start/stop the simulation with `ctrl+k`
+
+
+
+## DEVELOPMENT
 1. From the root directory, build the backend with docker-compose:  
 `docker-compose build`
 2. Deploy the backend:  
